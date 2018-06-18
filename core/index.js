@@ -7,22 +7,31 @@ const MetaData = require('./meta');
 const Response = require('../response');
 const ErrorResponse = require('../response/error');
 const JSONResponse = require('../response/json');
-const { INTERNAL_ERROR, FUNC_NOT_FOUND, META_NOT_FOUND } = require('../response/errors');
+const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
 
 const log = debug('smartsheet-plugin-sdk');
 const err = debug('smartsheet-plugin-sdk:err');
 
 function buildRegistrationData(factory, regPayload) {
   const registrationData = {};
-  _.each(regPayload, (payload, property) => {
+  let iterable = [];
+
+  if (!_.isNil(factory) && !_.isNil(factory.registrationData)) {
+    iterable = _.union(iterable, _.keys(factory.registrationData));
+  }
+  if (!_.isNil(regPayload)) {
+    iterable = _.union(iterable, _.keys(regPayload));
+  }
+
+  _.each(iterable, (property) => {
     const prop = _.camelCase(property);
     const value = (!_.isNil(factory)
     && !_.isNil(factory.registrationData)
     && _.isFunction(factory.registrationData[prop])
-      ? factory[prop](payload)
-      : new RegData(payload));
+      ? factory.registrationData[prop](regPayload[property])
+      : new RegData(regPayload[property]));
 
-    Object.defineProperty(registrationData, { [prop]: { get: value } });
+    Object.defineProperty(registrationData, prop, { get: () => value });
   });
 
   return registrationData;
@@ -33,7 +42,7 @@ function buildFunctionData(factory, property, funcPayload) {
   if (!_.isNil(factory)
   && !_.isNil(factory.functions)
   && _.isFunction(factory.functions[prop])) {
-    return factory[prop](funcPayload);
+    return factory.functions[prop](funcPayload);
   }
   return new FuncData(funcPayload);
 }
@@ -68,16 +77,15 @@ const SDKCore = class SDKCore {
         throw new ErrorResponse();
       }
 
-      const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {} }
+      const func = _.camelCase(this.request.body.func);
+      const { caller = {}, registrationData = {}, funcData = {}, httpData = {} }
         = this.request.body;
 
-      if (!func || !this.functions[func]) {
-        throw new ErrorResponse(FUNC_NOT_FOUND({ func }));
+      if (!this.request.body.func || !this.functions[func]) {
+        throw new ErrorResponse(FUNC_NOT_FOUND({ func: this.request.body.func }));
       }
 
-      if (!this.dataModule) {
-        throw new ErrorResponse(META_NOT_FOUND());
-      }
+      const callable = this.functions[func];
 
       const meta = new MetaData({
         caller,
@@ -86,14 +94,14 @@ const SDKCore = class SDKCore {
 
       const params = buildFunctionData(this.factory, func, { funcData, httpData });
 
-      return resolve(this.functions[func](meta, params));
+      return resolve(callable(meta, params));
     }).then((res) => {
       log('function response');
-      log(res);
       let value = res;
       if (!(value instanceof Response)) {
-        value = new JSONResponse(res);
+        value = new JSONResponse({ value });
       }
+      log(value);
       this.respond(value);
       return value;
     }).catch((e) => {

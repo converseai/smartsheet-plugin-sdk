@@ -27,15 +27,9 @@ const FUNC_NOT_FOUND = ({ func } = {}) => {
   return error;
 };
 
-const META_NOT_FOUND = () => {
-  const error = { status: 404, code: 'NOT_FOUND', message: 'Meta data cannot be found.' };
-  return error;
-};
-
 module.exports = {
   DEFAULT: { status: 500, code: 'ERROR', message: 'An error has occured.' },
   INTERNAL_ERROR,
   BAD_RESPONSE,
   FUNC_NOT_FOUND,
-  META_NOT_FOUND,
 };
