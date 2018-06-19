@@ -5,7 +5,7 @@ const chaiAsPromised = require('chai-as-promised');
 const { spy, fake } = require('sinon');
 const { mockReq, mockRes } = require('sinon-express-mock');
 const SDK = require('../../interface/http');
-const ErrorResponse = require('../../response/error');
+const { ErrorResponse } = require('../../response');
 const { FUNC_NOT_FOUND, INTERNAL_ERROR } = require('../../response/errors');
 const { fakeFactory, FUNC_NAME } = require('./fakes');
 

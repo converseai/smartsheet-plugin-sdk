@@ -5,7 +5,7 @@ const chaiAsPromised = require('chai-as-promised');
 const { fake } = require('sinon');
 const { mockReq, mockRes } = require('sinon-express-mock');
 const SDK = require('../../interface/http');
-const TEXTResponse = require('../../response/text');
+const { TEXTResponse } = require('../../response');
 const { fakeFactory, fakePayload, FUNC_NAME } = require('./fakes');
 
 const { expect } = chai;

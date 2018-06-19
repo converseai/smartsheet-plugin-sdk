@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Response = require('./response');
 
-module.exports = class JSONResponse extends Response {
+module.exports = class OAuth2Token extends Response {
   constructor({
     access_token,
     token_type,
