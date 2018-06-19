@@ -10,7 +10,6 @@ module.exports = class OAuth2Token extends Response {
     grant_type,
     metadata,
     redirectTo,
-    message,
   } = {}) {
     super();
     this.setAccessToken(access_token);
@@ -20,7 +19,6 @@ module.exports = class OAuth2Token extends Response {
     this.setGrantType(grant_type);
     this.setMetadata(metadata);
     this.setRedirectURL(redirectTo);
-    this.setMessage(message);
   }
 
   /**
@@ -117,20 +115,6 @@ module.exports = class OAuth2Token extends Response {
       const value = this.getValue() || {};
       value.oauth2Token = value.oauth2Token || {};
       value.oauth2Token.url = url;
-      this.setValue(value);
-    }
-  }
-
-  /**
-  * Sets the success message for the OAuth2 payload.
-  * @param {String} [message] An OAuth2 success message for the response.
-  * @public
-  */
-  setMessage(message) {
-    if (!_.isNil(message)) {
-      const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.message = message;
       this.setValue(value);
     }
   }

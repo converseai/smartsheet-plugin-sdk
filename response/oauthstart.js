@@ -6,13 +6,15 @@ module.exports = class OAuth2Start extends Response {
     oauth2URI,
     clientId,
     scope,
+    state,
     comment,
     extraParams,
   } = {}) {
     super();
-    this.setOAuth2URI(oauth2URI);
+    this.setOAuth2URL(oauth2URI);
     this.setClientID(clientId);
     this.setScope(scope);
+    this.setState(state);
     this.setComment(comment);
     this.setExtraParams(extraParams);
   }
@@ -23,7 +25,7 @@ module.exports = class OAuth2Start extends Response {
   * @param {String} oauth2URI The OAuth2 URI for the response.
   * @public
   */
-  setOAuth2URI(oauth2URI) {
+  setOAuth2URL(oauth2URI) {
     if (!_.isNil(oauth2URI)) {
       const value = this.getValue() || {};
       value.oauth2Setup = value.oauth2Setup || {};
