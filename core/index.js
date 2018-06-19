@@ -4,9 +4,7 @@ const debug = require('debug');
 const RegData = require('../classes/regdata');
 const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
-const Response = require('../response');
-const ErrorResponse = require('../response/error');
-const JSONResponse = require('../response/json');
+const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
 
 const log = debug('smartsheet-plugin-sdk');
@@ -77,13 +75,13 @@ const SDKCore = class SDKCore {
         throw new ErrorResponse();
       }
 
+      if (!this.request.body.func || !this.functions[this.request.body.func]) {
+        throw new ErrorResponse(FUNC_NOT_FOUND({ func: this.request.body.func }));
+      }
+
       const func = _.camelCase(this.request.body.func);
       const { caller = {}, registrationData = {}, funcData = {}, httpData = {} }
         = this.request.body;
-
-      if (!this.request.body.func || !this.functions[func]) {
-        throw new ErrorResponse(FUNC_NOT_FOUND({ func: this.request.body.func }));
-      }
 
       const callable = this.functions[func];
 

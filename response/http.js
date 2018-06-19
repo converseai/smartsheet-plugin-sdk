@@ -1,9 +1,10 @@
 const _ = require('lodash');
-const Response = require('./index');
+const Response = require('./response');
 
 module.exports = class HTTPResponse extends Response {
   constructor({ status, headers } = {}) {
     super();
+    this.http = {};
     this.setHTTPStatus(status);
     this.setHTTPHeaders(headers);
   }
@@ -17,9 +18,7 @@ module.exports = class HTTPResponse extends Response {
    */
   setHTTPStatus(status) {
     if (!_.isNil(status) && _.isInteger(status)) {
-      const http = this.getHTTP() || {};
-      http.status = status;
-      this.setHTTP(http);
+      this.http.status = status;
     }
   }
 
@@ -32,9 +31,7 @@ module.exports = class HTTPResponse extends Response {
    */
   setHTTPHeaders(headers) {
     if (!_.isNil(headers)) {
-      const http = this.getHTTP() || {};
-      http.headers = headers;
-      this.setHTTP(http);
+      this.http.headers = headers;
     }
   }
 };
