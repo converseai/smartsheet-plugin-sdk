@@ -5,7 +5,9 @@
   "main": "./core",
   "scripts": {
     "test": "mocha test --recursive",
-    "lint": "./node_modules/.bin/eslint ./**/*.js --fix"
+    "lint": "./node_modules/.bin/eslint ./**/*.js --fix",
+    "precommit": "npm test && npm run lint",
+    "prepush": "npm test"
   },
   "keywords": [
     "smartsheet",
@@ -21,6 +23,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
     "express": "^4.16.3",
+    "husky": "^0.14.3",
     "mocha": "^5.1.1",
     "sinon": "^6.0.0",
     "sinon-chai": "^3.2.0",
@@ -37,11 +40,14 @@
       "commonjs": true
     },
     "rules": {
+      "camelcase": [
+        "off"
+      ],
       "object-curly-newline": [
         "error",
         {
           "ObjectPattern": {
-            "multiline": false
+            "multiline": true
           }
         }
       ]
