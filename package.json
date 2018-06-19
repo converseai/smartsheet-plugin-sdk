@@ -4,7 +4,7 @@
   "description": "A node.js library for Smartsheet plugin development.",
   "main": "./core",
   "scripts": {
-    "test": "mocha test --recursive",
+    "test": "mocha test/**/**.spec.js --recursive",
     "lint": "./node_modules/.bin/eslint ./**/*.js --fix",
     "precommit": "npm test && ./node_modules/.bin/eslint ./**/*.js",
     "prepush": "npm test"
