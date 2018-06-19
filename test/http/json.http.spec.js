@@ -29,7 +29,7 @@ describe('HTTP', () => {
     sdk = undefined;
   });
 
-  describe('JSONResponses', () => {
+  describe('JSONResponse', () => {
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * JSONResponse
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
