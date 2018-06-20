@@ -2,7 +2,7 @@
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
 const chaiAsPromised = require('chai-as-promised');
-const { fake } = require('sinon');
+const { spy, fake } = require('sinon');
 const { mockReq, mockRes } = require('sinon-express-mock');
 const SDK = require('../../interface/http');
 const { JSONResponse } = require('../../response');
@@ -30,6 +30,71 @@ describe('HTTP', () => {
   });
 
   describe('Native Objects', () => {
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * Return Nothing
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    it('No return', () => {
+      const payload = fakePayload();
+
+      request.body = payload;
+
+      const func = spy();
+      const factory = fakeFactory();
+
+      sdk.setFunctions({ [FUNC_NAME]: func });
+      sdk.setParamFactory(factory);
+
+      return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
+        expect(res)
+          .to.be.an.instanceOf(JSONResponse);
+        expect(res)
+          .to.not.have.property('value');
+
+        expect(factory.registrationData.organization)
+          .to.be.callCount(1)
+          .to.be.calledWith(payload.registrationData.organization);
+        expect(factory.functions[FUNC_NAME])
+          .to.be.callCount(1)
+          .calledWith({ funcData: payload.funcData, httpData: payload.httpData });
+        expect(func)
+          .to.be.callCount(1);
+
+        expect(res)
+          .to.not.have.property('value');
+      });
+    });
+
+    it('Resolved undefined', () => {
+      const payload = fakePayload();
+
+      request.body = payload;
+
+      const func = fake.resolves();
+      const factory = fakeFactory();
+
+      sdk.setFunctions({ [FUNC_NAME]: func });
+      sdk.setParamFactory(factory);
+
+      return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
+        expect(res)
+          .to.be.an.instanceOf(JSONResponse);
+        expect(res)
+          .to.not.have.property('value');
+
+        expect(factory.registrationData.organization)
+          .to.be.callCount(1)
+          .to.be.calledWith(payload.registrationData.organization);
+        expect(factory.functions[FUNC_NAME])
+          .to.be.callCount(1)
+          .calledWith({ funcData: payload.funcData, httpData: payload.httpData });
+        expect(func)
+          .to.be.callCount(1);
+
+        expect(res)
+          .to.not.have.property('value');
+      });
+    });
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * Native Javascript Object
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
