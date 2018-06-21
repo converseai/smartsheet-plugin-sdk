@@ -136,17 +136,22 @@ const SDKCore = class SDKCore {
       this.respond(value);
       return value;
     }).catch((e) => {
+      let response;
+      let error;
       if (e instanceof ErrorResponse) {
-        err(e);
-        console.error(e);
-        this.respond(e);
+        response = e;
+        error = new Error(`${e.error.code}: ${e.error.message}`);
       } else {
-        err(e);
-        console.error(e);
-        this.error(INTERNAL_ERROR(e));
+        error = e;
+        response = new ErrorResponse(INTERNAL_ERROR(e));
       }
+
+      err(error);
+      console.error(error);
+      this.respond(response);
+
       if (!this.silence) {
-        throw e;
+        throw error;
       }
     });
   }
