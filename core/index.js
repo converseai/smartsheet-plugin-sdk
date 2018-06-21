@@ -1,4 +1,4 @@
-/* eslint class-methods-use-this:off */
+/* eslint class-methods-use-this:off, no-console:off */
 const _ = require('lodash');
 const debug = require('debug');
 const RegData = require('../classes/regdata');
@@ -74,7 +74,8 @@ function buildOnRegisterParams(factory, payload) {
 }
 
 const SDKCore = class SDKCore {
-  constructor({ request, response }) {
+  constructor({ request, response, silence = true }) {
+    this.silence = silence;
     this.request = request;
     this.response = response;
     this.functions = {};
@@ -135,13 +136,18 @@ const SDKCore = class SDKCore {
       this.respond(value);
       return value;
     }).catch((e) => {
-      err(e);
       if (e instanceof ErrorResponse) {
+        err(e);
+        console.error(e);
         this.respond(e);
       } else {
+        err(e);
+        console.error(e);
         this.error(INTERNAL_ERROR(e));
       }
-      throw e;
+      if (!this.silence) {
+        throw e;
+      }
     });
   }
 };

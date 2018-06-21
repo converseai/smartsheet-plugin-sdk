@@ -21,7 +21,6 @@ describe('HTTP', () => {
   beforeEach(() => {
     request = mockReq();
     response = mockRes();
-    sdk = SDK.create({ request, response });
   });
 
   afterEach(() => {
@@ -31,35 +30,80 @@ describe('HTTP', () => {
   });
 
   describe('ErrorResponse', () => {
-    it('No Functions', () => expect(sdk.handleRequest()).to.be.rejected.then(() =>
-      expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND()))));
-    it('Function not found', () => {
-      const func = spy();
-      sdk.setFunctions({ func });
-      return expect(sdk.handleRequest()).to.be.rejected.then(() => {
-        expect(func).to.be.callCount(0);
-        expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND()));
+    describe('Silence Errors', () => {
+      it('No Functions', () => {
+        sdk = SDK.create({ request, response });
+        return expect(sdk.handleRequest()).to.be.fulfilled.then(() =>
+          expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND())));
+      });
+      it('Function not found', () => {
+        sdk = SDK.create({ request, response });
+        const func = spy();
+        sdk.setFunctions({ func });
+        return expect(sdk.handleRequest()).to.be.fulfilled.then(() => {
+          expect(func).to.be.callCount(0);
+          expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND()));
+        });
+      });
+      it('Internal Error', () => {
+        sdk = SDK.create({ request, response });
+        request.body = { func: FUNC_NAME };
+
+        const error = new TypeError('internal error is thrown');
+
+        const func = fake(() => { throw error; });
+        const factory = fakeFactory();
+
+        sdk.setFunctions({ [FUNC_NAME]: func });
+        sdk.setParamFactory(factory);
+
+        return expect(sdk.handleRequest()).to.be.fulfilled.then(() => {
+          expect(factory.registrationData.organization)
+            .to.be.callCount(1).to.be.calledWith(undefined);
+          expect(factory.functions[FUNC_NAME])
+            .to.be.callCount(1).calledWith({ funcData: {}, httpData: {} });
+          expect(func).to.be.callCount(1);
+          expect(response.json).to.be.calledWith(new ErrorResponse(INTERNAL_ERROR(error)));
+        });
       });
     });
-    it('Internal Error', () => {
-      request.body = { func: FUNC_NAME };
 
-      const error = new TypeError('internal error is thrown');
+    describe('Throw Errors', () => {
+      it('No Functions', () => {
+        sdk = SDK.create({ request, response, silence: false });
+        return expect(sdk.handleRequest()).to.be.rejected.then(() =>
+          expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND())));
+      });
+      it('Function not found', () => {
+        sdk = SDK.create({ request, response, silence: false });
+        const func = spy();
+        sdk.setFunctions({ func });
+        return expect(sdk.handleRequest()).to.be.rejected.then(() => {
+          expect(func).to.be.callCount(0);
+          expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND()));
+        });
+      });
+      it('Internal Error', () => {
+        sdk = SDK.create({ request, response, silence: false });
+        request.body = { func: FUNC_NAME };
 
-      const func = fake(() => { throw error; });
-      const factory = fakeFactory();
+        const error = new TypeError('internal error is thrown');
 
-      sdk.setFunctions({ [FUNC_NAME]: func });
-      sdk.setParamFactory(factory);
+        const func = fake(() => { throw error; });
+        const factory = fakeFactory();
 
-      return expect(sdk.handleRequest()).to.be.rejected.then((e) => {
-        expect(e).to.eq(error);
-        expect(factory.registrationData.organization)
-          .to.be.callCount(1).to.be.calledWith(undefined);
-        expect(factory.functions[FUNC_NAME])
-          .to.be.callCount(1).calledWith({ funcData: {}, httpData: {} });
-        expect(func).to.be.callCount(1);
-        expect(response.json).to.be.calledWith(new ErrorResponse(INTERNAL_ERROR(error)));
+        sdk.setFunctions({ [FUNC_NAME]: func });
+        sdk.setParamFactory(factory);
+
+        return expect(sdk.handleRequest()).to.be.rejected.then((e) => {
+          expect(e).to.eq(error);
+          expect(factory.registrationData.organization)
+            .to.be.callCount(1).to.be.calledWith(undefined);
+          expect(factory.functions[FUNC_NAME])
+            .to.be.callCount(1).calledWith({ funcData: {}, httpData: {} });
+          expect(func).to.be.callCount(1);
+          expect(response.json).to.be.calledWith(new ErrorResponse(INTERNAL_ERROR(error)));
+        });
       });
     });
   });
