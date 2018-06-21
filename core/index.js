@@ -7,8 +7,19 @@ const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
 
+const ON_REGISTER = 'onPluginRegister';
+const ON_UNREGISTER = 'onPluginUnregister';
+
 const log = debug('smartsheet-plugin-sdk');
 const err = debug('smartsheet-plugin-sdk:err');
+
+function getRegistrationScope(factory, property) {
+  return (!_.isNil(factory)
+  && !_.isNil(factory.registrationData)
+  && _.isFunction(factory.registrationData[property])
+    ? factory.registrationData[property]
+    : regPayload => new RegData(regPayload[property]));
+}
 
 function buildRegistrationData(factory, regPayload) {
   const registrationData = {};
@@ -22,12 +33,8 @@ function buildRegistrationData(factory, regPayload) {
   }
 
   _.each(iterable, (property) => {
-    const value = (!_.isNil(factory)
-    && !_.isNil(factory.registrationData)
-    && _.isFunction(factory.registrationData[property])
-      ? factory.registrationData[property](regPayload[property])
-      : new RegData(regPayload[property]));
-
+    const build = getRegistrationScope(factory, property);
+    const value = build(regPayload[property]);
     Object.defineProperty(registrationData, property, { get: () => value });
   });
 
@@ -41,6 +48,29 @@ function buildFunctionData(factory, property, funcPayload) {
     return factory.functions[property](funcPayload);
   }
   return new FuncData(funcPayload);
+}
+
+function translateScope(scope) {
+  switch (scope) {
+    case 'WORKSPACE':
+      return 'workspace';
+    case 'USER':
+      return 'user';
+    case 'ORG':
+    default:
+      return 'organization';
+  }
+}
+
+function buildOnRegisterParams(factory, payload) {
+  const params = {};
+  const build = getRegistrationScope(factory, translateScope(payload.scope));
+  const value = build(payload.data);
+  Object.defineProperties(params, {
+    scope: { get: () => payload.scope },
+    data: { get: () => value },
+  });
+  return params;
 }
 
 const SDKCore = class SDKCore {
@@ -87,7 +117,12 @@ const SDKCore = class SDKCore {
         registrationData: buildRegistrationData(this.factory, registrationData),
       });
 
-      const params = buildFunctionData(this.factory, func, { funcData, httpData });
+      let params;
+      if (func === ON_REGISTER || func === ON_UNREGISTER) {
+        params = buildOnRegisterParams(this.factory, funcData);
+      } else {
+        params = buildFunctionData(this.factory, func, { funcData, httpData });
+      }
 
       return resolve(callable(meta, params));
     }).then((res) => {
