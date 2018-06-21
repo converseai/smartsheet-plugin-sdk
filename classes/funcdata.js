@@ -31,10 +31,32 @@ class FuncData {
    */
   constructor({ funcData = {}, httpData = {} } = {}) {
     const { queryParams = {}, formData = {}, body = {} } = httpData;
-    this._funcData = funcData;
-    this._formData = formData;
-    this._body = body;
-    this._queryParams = queryParams;
+    Object.defineProperties(this, {
+      _funcData: {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: funcData,
+      },
+      _formData: {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: formData,
+      },
+      _body: {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: body,
+      },
+      _queryParams: {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: queryParams,
+      },
+    });
   }
 
   /**

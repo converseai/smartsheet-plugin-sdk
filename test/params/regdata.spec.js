@@ -2,7 +2,7 @@
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
 const chaiAsPromised = require('chai-as-promised');
-const RegData = require('../classes/regdata');
+const RegData = require('../../classes/regdata');
 
 const { expect } = chai;
 chai.use(sinonChai);
@@ -22,5 +22,10 @@ describe('RegData', () => {
     expect(subject).is.instanceof(RegData);
     expect(subject).to.have.property('get').to.be.a('function');
     expect(subject.get('a')).to.eq('organization.a');
+
+    const descriptor = Object.getOwnPropertyDescriptor(subject, '_registrationData');
+    expect(descriptor).to.have.property('enumerable', false);
+    expect(descriptor).to.have.property('configurable', false);
+    expect(descriptor).to.have.property('writable', false);
   });
 });
