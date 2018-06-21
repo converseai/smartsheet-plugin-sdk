@@ -22,25 +22,23 @@ function buildRegistrationData(factory, regPayload) {
   }
 
   _.each(iterable, (property) => {
-    const prop = _.camelCase(property);
     const value = (!_.isNil(factory)
     && !_.isNil(factory.registrationData)
-    && _.isFunction(factory.registrationData[prop])
-      ? factory.registrationData[prop](regPayload[property])
+    && _.isFunction(factory.registrationData[property])
+      ? factory.registrationData[property](regPayload[property])
       : new RegData(regPayload[property]));
 
-    Object.defineProperty(registrationData, prop, { get: () => value });
+    Object.defineProperty(registrationData, property, { get: () => value });
   });
 
   return registrationData;
 }
 
 function buildFunctionData(factory, property, funcPayload) {
-  const prop = _.camelCase(property);
   if (!_.isNil(factory)
   && !_.isNil(factory.functions)
-  && _.isFunction(factory.functions[prop])) {
-    return factory.functions[prop](funcPayload);
+  && _.isFunction(factory.functions[property])) {
+    return factory.functions[property](funcPayload);
   }
   return new FuncData(funcPayload);
 }
@@ -79,8 +77,7 @@ const SDKCore = class SDKCore {
         throw new ErrorResponse(FUNC_NOT_FOUND({ func: this.request.body.func }));
       }
 
-      const func = _.camelCase(this.request.body.func);
-      const { caller = {}, registrationData = {}, funcData = {}, httpData = {} }
+      const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {} }
         = this.request.body;
 
       const callable = this.functions[func];

@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const { spy } = require('sinon');
 
-const FUNC_NAME = 'testFunction';
+const FUNC_NAME = 'test_function';
 module.exports.FUNC_NAME = FUNC_NAME;
 
 module.exports.fakeFactory = ext => _.merge({
