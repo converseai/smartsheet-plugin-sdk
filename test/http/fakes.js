@@ -13,7 +13,7 @@ module.exports.fakePayload = ext => _.merge({
   func: FUNC_NAME,
   caller: {
     organization: {
-      uuid: _,
+      uuid: '',
       data: {},
     },
   },
@@ -24,7 +24,7 @@ module.exports.fakePayload = ext => _.merge({
   },
   funcData: {},
   httpData: {
-    method: _,
+    method: '',
     formData: {},
     body: {},
     queryParams: {},
