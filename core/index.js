@@ -147,7 +147,7 @@ const SDKCore = class SDKCore {
       }
 
       err(error);
-      console.error([error.stack]);
+      console.error(error.stack);
       this.respond(response);
 
       if (!this.silence) {
