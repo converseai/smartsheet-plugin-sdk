@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { TYPE_JSON } = require('./consts');
 const Response = require('./response');
 
 module.exports = class OAuth2Token extends Response {
@@ -11,7 +12,7 @@ module.exports = class OAuth2Token extends Response {
     metadata,
     redirectTo,
   } = {}) {
-    super();
+    super({ type: TYPE_JSON });
     this.setAccessToken(access_token);
     this.setTokenType(token_type);
     this.setRefreshToken(refresh_token);

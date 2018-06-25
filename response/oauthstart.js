@@ -1,17 +1,18 @@
 const _ = require('lodash');
+const { TYPE_JSON } = require('./consts');
 const Response = require('./response');
 
 module.exports = class OAuth2Start extends Response {
   constructor({
-    oauth2URI,
+    oauth2URL,
     clientId,
     scope,
     state,
     comment,
     extraParams,
   } = {}) {
-    super();
-    this.setOAuth2URL(oauth2URI);
+    super({ type: TYPE_JSON });
+    this.setOAuth2URI(oauth2URL);
     this.setClientID(clientId);
     this.setScope(scope);
     this.setState(state);
@@ -22,14 +23,14 @@ module.exports = class OAuth2Start extends Response {
   /**
   * Sets the URI for the OAuth2 payload. Get parameters will be
   * discarded from this string, use setExtraParams to pass parameters.
-  * @param {String} oauth2URI The OAuth2 URI for the response.
+  * @param {String} oauth2URL The OAuth2 URI for the response.
   * @public
   */
-  setOAuth2URL(oauth2URI) {
-    if (!_.isNil(oauth2URI)) {
+  setOAuth2URI(oauth2URL) {
+    if (!_.isNil(oauth2URL)) {
       const value = this.getValue() || {};
       value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.oauth2URI = oauth2URI;
+      value.oauth2Setup.oauth2URL = oauth2URL;
       this.setValue(value);
     }
   }
@@ -96,7 +97,7 @@ module.exports = class OAuth2Start extends Response {
   * @public
   */
   setExtraParams(extraParams) {
-    if (!_.isNil(extraParams)) {
+    if (!_.isNil(extraParams) && _.isObject(extraParams)) {
       const value = this.getValue() || {};
       value.oauth2Setup = value.oauth2Setup || {};
       value.oauth2Setup.extraParams = extraParams;

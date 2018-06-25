@@ -397,7 +397,7 @@ describe('HTTP', () => {
 
       const resolvedval = 'abc';
       const value = new Promise((resolve) => {
-        setTimeout(() => resolve(resolvedval), 500);
+        setTimeout(() => resolve(resolvedval), 100);
       });
 
       const func = fake.returns(value);
@@ -435,7 +435,7 @@ describe('HTTP', () => {
 
       const resolvedval = 'abc';
       const value = new Promise((resolve) => {
-        setTimeout(() => resolve(resolvedval), 500);
+        setTimeout(() => resolve(resolvedval), 100);
       });
 
       const func = fake.resolves(value);

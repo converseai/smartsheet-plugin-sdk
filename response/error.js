@@ -1,10 +1,11 @@
 const _ = require('lodash');
+const { TYPE_ERROR } = require('./consts');
 const HTTPResponse = require('./http');
 const { DEFAULT } = require('./errors');
 
 module.exports = class ErrorResponse extends HTTPResponse {
   constructor({ message, code, status } = DEFAULT) {
-    super({ status });
+    super({ status, type: TYPE_ERROR });
     this.setErrorCode(code);
     this.setErrorMessage(message);
   }

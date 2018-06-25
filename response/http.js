@@ -2,8 +2,8 @@ const _ = require('lodash');
 const Response = require('./response');
 
 module.exports = class HTTPResponse extends Response {
-  constructor({ status, headers } = {}) {
-    super();
+  constructor({ status, headers, type } = {}) {
+    super({ type });
     this.http = {};
     this.setHTTPStatus(status);
     this.setHTTPHeaders(headers);
