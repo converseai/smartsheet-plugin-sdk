@@ -2,6 +2,7 @@
 const _ = require('lodash');
 const debug = require('debug');
 const RegData = require('../classes/regdata');
+const OnRegData = require('../classes/onregdata');
 const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
@@ -48,29 +49,6 @@ function buildFunctionData(factory, property, funcPayload) {
     return factory.functions[property](funcPayload);
   }
   return new FuncData(funcPayload);
-}
-
-function translateScope(scope) {
-  switch (scope) {
-    case 'WORKSPACE':
-      return 'workspace';
-    case 'USER':
-      return 'user';
-    case 'ORG':
-    default:
-      return 'organization';
-  }
-}
-
-function buildOnRegisterParams(factory, payload) {
-  const params = {};
-  const build = getRegistrationScope(factory, translateScope(payload.scope));
-  const value = build(payload.data);
-  Object.defineProperties(params, {
-    scope: { get: () => payload.scope },
-    data: { get: () => value },
-  });
-  return params;
 }
 
 const SDKCore = class SDKCore {
@@ -120,7 +98,7 @@ const SDKCore = class SDKCore {
 
       let params;
       if (func === ON_REGISTER || func === ON_UNREGISTER) {
-        params = buildOnRegisterParams(this.factory, funcData);
+        params = new OnRegData(funcData);
       } else {
         params = buildFunctionData(this.factory, func, { funcData, httpData });
       }
