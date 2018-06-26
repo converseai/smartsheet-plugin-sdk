@@ -131,8 +131,8 @@ module.exports = class OAuth2Token extends Response {
   setMessage(message) {
     if (!_.isNil(message)) {
       const value = this.getValue() || {};
-      value.oAuth2Setup = value.oAuth2Setup || {};
-      value.oAuth2Setup.message = message;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.message = message;
       this.setValue(value);
     }
   }

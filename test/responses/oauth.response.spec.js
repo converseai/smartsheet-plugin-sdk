@@ -82,7 +82,7 @@ function testToken(response) {
     .to.be.an('string')
     .to.eq('f');
 
-  expect(response.value.oAuth2Setup)
+  expect(response.value.oAuth2Token)
     .to.have.property('message')
     .to.be.an('string')
     .to.eq('g');
