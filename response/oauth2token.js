@@ -116,8 +116,7 @@ module.exports = class OAuth2Token extends Response {
   setRedirectURL(redirectURL) {
     if (!_.isNil(redirectURL)) {
       const value = this.getValue() || {};
-      value.oAuth2Token = value.oAuth2Token || {};
-      value.oAuth2Token.redirectURL = redirectURL;
+      value.redirectURL = redirectURL;
       this.setValue(value);
     }
   }
@@ -131,8 +130,7 @@ module.exports = class OAuth2Token extends Response {
   setMessage(message) {
     if (!_.isNil(message)) {
       const value = this.getValue() || {};
-      value.oAuth2Token = value.oAuth2Token || {};
-      value.oAuth2Token.message = message;
+      value.message = message;
       this.setValue(value);
     }
   }
