@@ -30,8 +30,8 @@ module.exports = class OAuth2Token extends Response {
   setAccessToken(access_token) {
     if (!_.isNil(access_token)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.access_token = access_token;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.access_token = access_token;
       this.setValue(value);
     }
   }
@@ -44,8 +44,8 @@ module.exports = class OAuth2Token extends Response {
   setTokenType(token_type) {
     if (!_.isNil(token_type)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.token_type = token_type;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.token_type = token_type;
       this.setValue(value);
     }
   }
@@ -58,8 +58,8 @@ module.exports = class OAuth2Token extends Response {
   setRefreshToken(refresh_token) {
     if (!_.isNil(refresh_token)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.refresh_token = refresh_token;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.refresh_token = refresh_token;
       this.setValue(value);
     }
   }
@@ -72,8 +72,8 @@ module.exports = class OAuth2Token extends Response {
   setExpiresIn(expires_in) {
     if (!_.isNil(expires_in)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.expires_in = expires_in;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.expires_in = expires_in;
       this.setValue(value);
     }
   }
@@ -86,8 +86,8 @@ module.exports = class OAuth2Token extends Response {
   setGrantType(grant_type) {
     if (!_.isNil(grant_type)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.grant_type = grant_type;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.grant_type = grant_type;
       this.setValue(value);
     }
   }
@@ -100,8 +100,8 @@ module.exports = class OAuth2Token extends Response {
   setMetadata(metadata) {
     if (!_.isNil(metadata)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.metadata = metadata;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.metadata = metadata;
       this.setValue(value);
     }
   }
@@ -114,8 +114,8 @@ module.exports = class OAuth2Token extends Response {
   setRedirectURL(url) {
     if (!_.isNil(url)) {
       const value = this.getValue() || {};
-      value.oauth2Token = value.oauth2Token || {};
-      value.oauth2Token.url = url;
+      value.oAuth2Token = value.oAuth2Token || {};
+      value.oAuth2Token.url = url;
       this.setValue(value);
     }
   }

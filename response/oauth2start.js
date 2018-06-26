@@ -4,7 +4,7 @@ const Response = require('./response');
 
 module.exports = class OAuth2Start extends Response {
   constructor({
-    oauth2URL,
+    oAuth2URL,
     clientId,
     scope,
     state,
@@ -12,7 +12,7 @@ module.exports = class OAuth2Start extends Response {
     extraParams,
   } = {}) {
     super({ type: TYPE_JSON });
-    this.setOAuth2URI(oauth2URL);
+    this.setOAuth2URI(oAuth2URL);
     this.setClientID(clientId);
     this.setScope(scope);
     this.setState(state);
@@ -23,14 +23,14 @@ module.exports = class OAuth2Start extends Response {
   /**
   * Sets the URI for the OAuth2 payload. Get parameters will be
   * discarded from this string, use setExtraParams to pass parameters.
-  * @param {String} oauth2URL The OAuth2 URI for the response.
+  * @param {String} oAuth2URL The OAuth2 URI for the response.
   * @public
   */
-  setOAuth2URI(oauth2URL) {
-    if (!_.isNil(oauth2URL)) {
+  setOAuth2URI(oAuth2URL) {
+    if (!_.isNil(oAuth2URL)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.oauth2URL = oauth2URL;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.oAuth2URL = oAuth2URL;
       this.setValue(value);
     }
   }
@@ -43,8 +43,8 @@ module.exports = class OAuth2Start extends Response {
   setClientID(clientId) {
     if (!_.isNil(clientId)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.clientId = clientId;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.clientId = clientId;
       this.setValue(value);
     }
   }
@@ -57,8 +57,8 @@ module.exports = class OAuth2Start extends Response {
   setScope(scope) {
     if (!_.isNil(scope)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.scope = scope;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.scope = scope;
       this.setValue(value);
     }
   }
@@ -71,8 +71,8 @@ module.exports = class OAuth2Start extends Response {
   setState(state) {
     if (!_.isNil(state)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.state = state;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.state = state;
       this.setValue(value);
     }
   }
@@ -85,8 +85,8 @@ module.exports = class OAuth2Start extends Response {
   setComment(comment) {
     if (!_.isNil(comment)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.comment = comment;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.comment = comment;
       this.setValue(value);
     }
   }
@@ -99,8 +99,8 @@ module.exports = class OAuth2Start extends Response {
   setExtraParams(extraParams) {
     if (!_.isNil(extraParams) && _.isObject(extraParams)) {
       const value = this.getValue() || {};
-      value.oauth2Setup = value.oauth2Setup || {};
-      value.oauth2Setup.extraParams = extraParams;
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.extraParams = extraParams;
       this.setValue(value);
     }
   }

@@ -38,16 +38,16 @@ describe('HTTP', () => {
 
       request.body = payload;
 
-      const oauth = new OAuth2Start();
+      const oAuth = new OAuth2Start();
 
-      const func = fake.returns(oauth);
+      const func = fake.returns(oAuth);
       const factory = fakeFactory();
 
       sdk.setFunctions({ [FUNC_NAME]: func });
       sdk.setParamFactory(factory);
 
       return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
-        expect(res).to.eq(oauth);
+        expect(res).to.eq(oAuth);
 
         expect(factory.registrationData.organization)
           .to.be.callCount(1)
@@ -59,7 +59,7 @@ describe('HTTP', () => {
           .to.be.callCount(1);
 
         expect(response.json)
-          .to.be.calledWith(oauth);
+          .to.be.calledWith(oAuth);
       });
     });
 
@@ -68,16 +68,16 @@ describe('HTTP', () => {
 
       request.body = payload;
 
-      const oauth = new OAuth2Start();
+      const oAuth = new OAuth2Start();
 
-      const func = fake.resolves(oauth);
+      const func = fake.resolves(oAuth);
       const factory = fakeFactory();
 
       sdk.setFunctions({ [FUNC_NAME]: func });
       sdk.setParamFactory(factory);
 
       return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
-        expect(res).to.eq(oauth);
+        expect(res).to.eq(oAuth);
 
         expect(factory.registrationData.organization)
           .to.be.callCount(1)
@@ -88,7 +88,7 @@ describe('HTTP', () => {
         expect(func)
           .to.be.callCount(1);
 
-        expect(response.json).to.be.calledWith(oauth);
+        expect(response.json).to.be.calledWith(oAuth);
       });
     });
   });
@@ -101,16 +101,16 @@ describe('HTTP', () => {
 
       request.body = payload;
 
-      const oauth = new OAuth2Token();
+      const oAuth = new OAuth2Token();
 
-      const func = fake.returns(oauth);
+      const func = fake.returns(oAuth);
       const factory = fakeFactory();
 
       sdk.setFunctions({ [FUNC_NAME]: func });
       sdk.setParamFactory(factory);
 
       return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
-        expect(res).to.eq(oauth);
+        expect(res).to.eq(oAuth);
 
         expect(factory.registrationData.organization)
           .to.be.callCount(1)
@@ -122,7 +122,7 @@ describe('HTTP', () => {
           .to.be.callCount(1);
 
         expect(response.json)
-          .to.be.calledWith(oauth);
+          .to.be.calledWith(oAuth);
       });
     });
 
@@ -131,16 +131,16 @@ describe('HTTP', () => {
 
       request.body = payload;
 
-      const oauth = new OAuth2Token();
+      const oAuth = new OAuth2Token();
 
-      const func = fake.resolves(oauth);
+      const func = fake.resolves(oAuth);
       const factory = fakeFactory();
 
       sdk.setFunctions({ [FUNC_NAME]: func });
       sdk.setParamFactory(factory);
 
       return expect(sdk.handleRequest()).to.be.fulfilled.then((res) => {
-        expect(res).to.eq(oauth);
+        expect(res).to.eq(oAuth);
 
         expect(factory.registrationData.organization)
           .to.be.callCount(1)
@@ -151,7 +151,7 @@ describe('HTTP', () => {
         expect(func)
           .to.be.callCount(1);
 
-        expect(response.json).to.be.calledWith(oauth);
+        expect(response.json).to.be.calledWith(oAuth);
       });
     });
   });

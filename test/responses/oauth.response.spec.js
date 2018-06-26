@@ -12,35 +12,35 @@ function testStart(response) {
   expect(response)
     .to.have.property('value')
     .to.be.an('object')
-    .to.have.property('oauth2Setup')
+    .to.have.property('oAuth2Setup')
     .to.be.an('object');
 
-  expect(response.value.oauth2Setup)
-    .to.have.property('oauth2URL')
+  expect(response.value.oAuth2Setup)
+    .to.have.property('oAuth2URL')
     .to.be.an('string')
     .to.eq('a');
 
-  expect(response.value.oauth2Setup)
+  expect(response.value.oAuth2Setup)
     .to.have.property('clientId')
     .to.be.an('string')
     .to.eq('b');
 
-  expect(response.value.oauth2Setup)
+  expect(response.value.oAuth2Setup)
     .to.have.property('scope')
     .to.be.an('string')
     .to.eq('c');
 
-  expect(response.value.oauth2Setup)
+  expect(response.value.oAuth2Setup)
     .to.have.property('state')
     .to.be.an('string')
     .to.eq('d');
 
-  expect(response.value.oauth2Setup)
+  expect(response.value.oAuth2Setup)
     .to.have.property('comment')
     .to.be.an('string')
     .to.eq('e');
 
-  expect(response.value.oauth2Setup)
+  expect(response.value.oAuth2Setup)
     .to.have.property('extraParams')
     .to.be.an('object')
     .to.eql({ a: 'a' });
@@ -54,40 +54,40 @@ function testToken(response) {
   expect(response)
     .to.have.property('value')
     .to.be.an('object')
-    .to.have.property('oauth2Token')
+    .to.have.property('oAuth2Token')
     .to.be.an('object');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('access_token')
     .to.be.an('string')
     .to.eq('a');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('token_type')
     .to.be.an('string')
     .to.eq('b');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('refresh_token')
     .to.be.an('string')
     .to.eq('c');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('expires_in')
     .to.be.an('string')
     .to.eq('d');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('grant_type')
     .to.be.an('string')
     .to.eq('e');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('url')
     .to.be.an('string')
     .to.eq('f');
 
-  expect(response.value.oauth2Token)
+  expect(response.value.oAuth2Token)
     .to.have.property('metadata')
     .to.be.an('object')
     .to.eql({ a: 'a' });
@@ -96,7 +96,7 @@ function testToken(response) {
 describe('Responses', () => {
   it('OAuth2Start constructor', () => {
     const response = new OAuth2Start({
-      oauth2URL: 'a',
+      oAuth2URL: 'a',
       clientId: 'b',
       scope: 'c',
       state: 'd',
@@ -108,7 +108,7 @@ describe('Responses', () => {
 
   it('OAuth2Start setter', () => {
     const response = new OAuth2Start({
-      oauth2URL: 'x',
+      oAuth2URL: 'x',
       clientId: 'x',
       scope: 'x',
       state: 'x',

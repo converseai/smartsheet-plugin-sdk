@@ -4,8 +4,8 @@ const ErrorResponse = require('./error');
 const JSONResponse = require('./json');
 const TEXTResponse = require('./text');
 const XMLResponse = require('./xml');
-const OAuth2Start = require('./oauthstart');
-const OAuth2Token = require('./oauthtoken');
+const OAuth2Start = require('./oauth2start');
+const OAuth2Token = require('./oauth2token');
 
 module.exports.Response = Response;
 module.exports.HTTPResponse = HTTPResponse;
