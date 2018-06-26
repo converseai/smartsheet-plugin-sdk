@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha test/**/**.spec.js --recursive",
     "lint": "./node_modules/.bin/eslint ./**/*.js --fix",
+    "protos": "./proto.sh",
     "precommit": "npm test && ./node_modules/.bin/eslint ./**/*.js",
     "prepush": "npm test"
   },
@@ -33,6 +34,9 @@
     "debug": "^3.1.0",
     "lodash": "^4.17.10"
   },
+  "peerDependencies": {
+    "grpc": "1.x"
+  },
   "eslintConfig": {
     "extends": "airbnb-base",
     "env": {
@@ -41,6 +45,9 @@
     },
     "rules": {
       "camelcase": [
+        "off"
+      ],
+      "no-underscore-dangle": [
         "off"
       ],
       "object-curly-newline": [

@@ -1,5 +1,3 @@
-/* eslint no-underscore-dangle: off */
-
 /**
  * @class BaseRegData
  * @classdesc Abstract base class for all registrationData classes.

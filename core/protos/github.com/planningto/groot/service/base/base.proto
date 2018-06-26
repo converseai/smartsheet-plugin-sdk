@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package base;
+
+option java_package = "com.smartsheet.groot.base";
+option java_multiple_files = true;
+option java_outer_classname = "BaseProto";
+
+message CallError {
+	string code = 1;
+	string description = 2;
+	int32 httpStatus = 3;
+}
+
+message Organization {
+	string organizationUUID   = 1;
+	// Data is a JSON marshalled Object
+	bytes data = 2; 
+}
+
+message User {
+	string userUUID = 1;
+	// Data is a JSON marshalled Object
+	bytes data = 2; 
+}
+
+message Workspace {
+	string workspaceUUID = 1;
+	// Data is a JSON marshalled Object
+	bytes data = 2; 
+}
+
+message Caller {  
+	User invoker = 1;
+	Organization organization = 2;
+	Workspace workspace = 3;
+	int64 callTime = 4;
+	string messageID = 5;
+	oneof plugin{
+		string pluginUUID = 7;
+		PluginIdentifier pluginIdentifer = 8;
+	}
+}
+
+message PluginIdentifier{
+	string providerUUID = 1;
+	string pluginID = 2;
+}
+
+message TokenData {
+	string pluginUUID = 1;
+	string organizationUUID = 2; 
+	string workspaceUUID = 3;
+	string userUUID = 4; 
+}
+
+message CallToken {
+	int64  validUntil = 1; 
+	string signature = 2;
+	TokenData payload = 3;
+}

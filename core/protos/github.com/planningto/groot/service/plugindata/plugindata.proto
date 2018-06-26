@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package plugindata;
+
+import "github.com/planningto/groot/service/base/base.proto";
+import "github.com/planningto/groot/service/plugin/plugin.proto";
+
+option java_package = "com.smartsheet.groot.plugindata";
+option java_multiple_files = true;
+option java_outer_classname = "PluginDataProto";
+
+message PluginCaller {  
+	string userUUID = 1;
+	string organizationUUID = 2;
+	string workspaceUUID = 3;
+	base.CallToken callToken = 6;
+}
+
+
+message PluginOAuth2InfoRequest {
+	PluginCaller caller = 1;
+	plugin.OAuthType oAuthType = 2;
+	plugin.OAuth2Data oAuth2Data = 3;
+}
+
+message PluginOAuth2InfoResponse{
+  base.CallError error = 1;
+	plugin.OAuth2Data oAuth2Data = 2;
+}
+
+message PluginDataRequest {
+	PluginCaller caller = 1;
+	string key = 2;
+	bytes data = 3;
+}
+
+message PluginDataResponse{
+  base.CallError error = 1;
+  bytes data = 2;
+}
+
+service PluginData{
+  rpc GetPluginOAuth2Info(PluginOAuth2InfoRequest) returns (PluginOAuth2InfoResponse){};
+	rpc StorePluginOAuth2Info(PluginOAuth2InfoRequest) returns (PluginOAuth2InfoResponse){};
+	rpc DeletePluginOAuth2Info(PluginOAuth2InfoRequest) returns (PluginOAuth2InfoResponse){}
+  
+  rpc GetPluginData(PluginDataRequest) returns (PluginDataResponse){};
+  rpc StorePluginData(PluginDataRequest) returns (PluginDataResponse){};
+  rpc DeletePluginData(PluginDataRequest) returns (PluginDataResponse){};
+}
