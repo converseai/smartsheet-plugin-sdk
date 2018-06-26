@@ -8,7 +8,6 @@ module.exports = class OAuth2Start extends Response {
     clientId,
     scope,
     state,
-    comment,
     extraParams,
   } = {}) {
     super({ type: TYPE_JSON });
@@ -16,7 +15,6 @@ module.exports = class OAuth2Start extends Response {
     this.setClientID(clientId);
     this.setScope(scope);
     this.setState(state);
-    this.setComment(comment);
     this.setExtraParams(extraParams);
   }
 
@@ -73,20 +71,6 @@ module.exports = class OAuth2Start extends Response {
       const value = this.getValue() || {};
       value.oAuth2Setup = value.oAuth2Setup || {};
       value.oAuth2Setup.state = state;
-      this.setValue(value);
-    }
-  }
-
-  /**
-  * Sets the user comment for the OAuth2 payload.
-  * @param {String} [comment] The OAuth2 user comment for the response.
-  * @public
-  */
-  setComment(comment) {
-    if (!_.isNil(comment)) {
-      const value = this.getValue() || {};
-      value.oAuth2Setup = value.oAuth2Setup || {};
-      value.oAuth2Setup.comment = comment;
       this.setValue(value);
     }
   }

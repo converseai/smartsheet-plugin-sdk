@@ -36,11 +36,6 @@ function testStart(response) {
     .to.eq('d');
 
   expect(response.value.oAuth2Setup)
-    .to.have.property('comment')
-    .to.be.an('string')
-    .to.eq('e');
-
-  expect(response.value.oAuth2Setup)
     .to.have.property('extraParams')
     .to.be.an('object')
     .to.eql({ a: 'a' });
@@ -83,9 +78,14 @@ function testToken(response) {
     .to.eq('e');
 
   expect(response.value.oAuth2Token)
-    .to.have.property('url')
+    .to.have.property('redirectURL')
     .to.be.an('string')
     .to.eq('f');
+
+  expect(response.value.oAuth2Setup)
+    .to.have.property('message')
+    .to.be.an('string')
+    .to.eq('g');
 
   expect(response.value.oAuth2Token)
     .to.have.property('metadata')
@@ -100,7 +100,6 @@ describe('Responses', () => {
       clientId: 'b',
       scope: 'c',
       state: 'd',
-      comment: 'e',
       extraParams: { a: 'a' },
     });
     testStart(response);
@@ -112,14 +111,12 @@ describe('Responses', () => {
       clientId: 'x',
       scope: 'x',
       state: 'x',
-      comment: 'x',
       extraParams: { x: 'x' },
     });
     response.setOAuth2URI('a');
     response.setClientID('b');
     response.setScope('c');
     response.setState('d');
-    response.setComment('e');
     response.setExtraParams({ a: 'a' });
     testStart(response);
   });
@@ -131,7 +128,8 @@ describe('Responses', () => {
       refresh_token: 'c',
       expires_in: 'd',
       grant_type: 'e',
-      redirectTo: 'f',
+      redirectURL: 'f',
+      message: 'g',
       metadata: { a: 'a' },
     });
     testToken(response);
@@ -144,7 +142,8 @@ describe('Responses', () => {
       refresh_token: 'x',
       expires_in: 'x',
       grant_type: 'x',
-      redirectTo: 'x',
+      redirectURL: 'x',
+      message: 'x',
       metadata: { x: 'x' },
     });
     response.setAccessToken('a');
@@ -153,6 +152,7 @@ describe('Responses', () => {
     response.setExpiresIn('d');
     response.setGrantType('e');
     response.setRedirectURL('f');
+    response.setMessage('g');
     response.setMetadata({ a: 'a' });
     testToken(response);
   });

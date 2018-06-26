@@ -10,7 +10,8 @@ module.exports = class OAuth2Token extends Response {
     expires_in,
     grant_type,
     metadata,
-    redirectTo,
+    redirectURL,
+    message,
   } = {}) {
     super({ type: TYPE_JSON });
     this.setAccessToken(access_token);
@@ -19,7 +20,8 @@ module.exports = class OAuth2Token extends Response {
     this.setExpiresIn(expires_in);
     this.setGrantType(grant_type);
     this.setMetadata(metadata);
-    this.setRedirectURL(redirectTo);
+    this.setRedirectURL(redirectURL);
+    this.setMessage(message);
   }
 
   /**
@@ -108,14 +110,29 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the redirect URL for the OAuth2 payload.
-  * @param {String} [url] An OAuth2 redirect URL for the response.
+  * @param {String} [redirectURL] An OAuth2 redirect URL for the response.
   * @public
   */
-  setRedirectURL(url) {
-    if (!_.isNil(url)) {
+  setRedirectURL(redirectURL) {
+    if (!_.isNil(redirectURL)) {
       const value = this.getValue() || {};
       value.oAuth2Token = value.oAuth2Token || {};
-      value.oAuth2Token.url = url;
+      value.oAuth2Token.redirectURL = redirectURL;
+      this.setValue(value);
+    }
+  }
+
+  /**
+  * Sets the user message for the OAuth2 payload.
+  * If redirect URL is set then this value is ignored.
+  * @param {String} [message] The OAuth2 user message for the response.
+  * @public
+  */
+  setMessage(message) {
+    if (!_.isNil(message)) {
+      const value = this.getValue() || {};
+      value.oAuth2Setup = value.oAuth2Setup || {};
+      value.oAuth2Setup.message = message;
       this.setValue(value);
     }
   }
