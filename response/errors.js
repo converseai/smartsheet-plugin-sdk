@@ -30,7 +30,7 @@ const FUNC_NOT_FOUND = ({ func } = {}) => {
 };
 
 module.exports = {
-  DEFAULT: { status: 500, code: 'ERROR', message: 'An error has occured.' },
+  DEFAULT: { status: 500, code: 'ERROR', message: 'An error has occurred.' },
   INTERNAL_ERROR,
   BAD_RESPONSE,
   FUNC_NOT_FOUND,
