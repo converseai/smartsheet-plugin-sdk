@@ -15,8 +15,10 @@ const BAD_RESPONSE = ({ func } = {}) => {
 const INTERNAL_ERROR = (e) => {
   if (e instanceof Error) {
     return { status: 500, code: e.code, message: e.message };
+  } else if (_.isString(e)) {
+    return { status: 500, code: 'INTERNAL_ERROR', message: e };
   }
-  return { status: 500, code: 'INTERNAL_ERROR', message: 'An unknown error has occured.' };
+  return { status: 500, code: 'INTERNAL_ERROR', message: 'An unknown error has occurred.' };
 };
 
 const FUNC_NOT_FOUND = ({ func } = {}) => {
