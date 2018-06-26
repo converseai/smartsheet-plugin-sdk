@@ -6,7 +6,7 @@ function promisifyGrpc(grpc, property, data) {
       if (err) {
         return reject(err);
       }
-      return resolve(res);
+      return resolve(JSON.parse(res.data.toString('utf8')));
     });
   });
 }
@@ -14,7 +14,7 @@ function promisifyGrpc(grpc, property, data) {
 function pluginCaller(caller) {
   return {
     userUUID: caller.user.uuid,
-    organizationUUID: caller.organisation.uuid,
+    organizationUUID: caller.organization.uuid,
     workspaceUUID: caller.workspace.uuid,
     callToken: caller.callToken,
   };
@@ -29,7 +29,7 @@ function pluginCaller(caller) {
 /**
  * @typedef {Object} Caller
  * @property {CallerData} user
- * @property {CallerData} organisation
+ * @property {CallerData} organization
  * @property {CallerData} workspace
  */
 
@@ -53,12 +53,12 @@ class CallerData {
 }
 
 class Caller {
-  constructor({ user, organisation, workspace, callToken } = {}) {
+  constructor({ user, organization, workspace, callToken } = {}) {
     const uData = new CallerData(user);
-    const pData = new CallerData(organisation);
+    const pData = new CallerData(organization);
     const wData = new CallerData(workspace);
     Object.defineProperty(this, 'user', { get: () => uData });
-    Object.defineProperty(this, 'organisation', { get: () => pData });
+    Object.defineProperty(this, 'organization', { get: () => pData });
     Object.defineProperty(this, 'workspace', { get: () => wData });
     Object.defineProperty(this, 'callToken', { get: () => callToken });
   }
@@ -70,10 +70,10 @@ class Caller {
   get user() {}
 
   /**
-   * Information for the organisation specific caller data.
+   * Information for the organization specific caller data.
    * @type CallerData
    */
-  get organisation() {}
+  get organization() {}
 
   /**
    * Information for the workspace specific caller data.
@@ -87,7 +87,7 @@ class MetaData {
     const _caller = new Caller(caller);
     Object.defineProperty(this, 'caller', { get: () => (_caller) });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData) });
-    Object.defineProperty(this, '_grpc', {
+    Object.defineProperty(this, 'grpc', {
       enumerable: false,
       configurable: false,
       writable: false,
@@ -122,7 +122,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'storePluginData', {
       key,
       caller,
-      data,
+      data: Buffer.from(JSON.stringify(data)),
     });
   }
 
@@ -149,7 +149,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'storePluginData', {
       key,
       caller,
-      data,
+      data: Buffer.from(JSON.stringify(data)),
     });
   }
 

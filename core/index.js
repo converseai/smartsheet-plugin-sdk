@@ -7,7 +7,7 @@ const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
-const grpc = require('./protos');
+const gRPC = require('./protos');
 
 const ON_REGISTER = 'onPluginRegister';
 const ON_UNREGISTER = 'onPluginUnregister';
@@ -60,7 +60,7 @@ const SDKCore = class SDKCore {
     this.functions = {};
     this.factory = {};
     if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
-      this.grpc = grpc(process.env.PLUGINDATA_SERVICE);
+      this.grpc = gRPC(process.env.PLUGINDATA_SERVICE);
     }
   }
 
@@ -98,7 +98,7 @@ const SDKCore = class SDKCore {
       const meta = new MetaData({
         caller,
         registrationData: buildRegistrationData(this.factory, registrationData),
-        grpc,
+        grpc: this.grpc,
       });
 
       let params;

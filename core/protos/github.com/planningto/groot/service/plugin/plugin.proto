@@ -83,9 +83,8 @@ message OAuth2SetupData {
 	string clientID = 2;
 	string scope = 3;
 	string state = 4;
-	string comment = 5;
-	map<string,string> extraParams = 6;
-	string redirectURI = 7;
+	map<string,string> extraParams = 5;
+	string redirectURI = 6;
 }
 
 message OAuth2StartResponse {
@@ -105,7 +104,7 @@ message OAuth2HandleCodeResponse{
 	base.CallError error = 2;
 	oneof complete {
 		string message = 3;
-		string redirectURI = 4;
+		string redirectURL = 4;
 	}
 }
 
