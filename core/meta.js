@@ -164,6 +164,7 @@ class MetaData {
 
   getOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
+    console.log(caller);
     return promisifyGrpc(this.grpc, 'getPluginOAuth2Info', {
       caller,
       oAuthType: 0,
