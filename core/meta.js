@@ -6,7 +6,7 @@ function promisifyGrpc(grpc, property, data) {
       if (err) {
         return reject(err);
       }
-      return resolve(JSON.parse(res.data.toString('utf8')));
+      return resolve(res);
     });
   });
 }
@@ -113,7 +113,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'getPluginData', {
       key,
       caller,
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
   setPluginDataForUser(key, data, userUUID = this.caller.user.uuid) {
@@ -123,7 +123,7 @@ class MetaData {
       key,
       caller,
       data: Buffer.from(JSON.stringify(data)),
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
   deletePluginDataForUser(key, userUUID = this.caller.user.uuid) {
@@ -132,7 +132,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginData', {
       key,
       caller,
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
 
@@ -141,7 +141,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'getPluginData', {
       key,
       caller,
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
   setPluginDataForOrganization(key, data) {
@@ -150,7 +150,7 @@ class MetaData {
       key,
       caller,
       data: Buffer.from(JSON.stringify(data)),
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
   deletePluginDataForOrganization(key) {
@@ -158,7 +158,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginData', {
       key,
       caller,
-    });
+    }).then(res => JSON.parse(res.data.toString('utf8')));
   }
 
 
@@ -168,7 +168,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'getPluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 
   setOAuth2InfoForUser(oAuth2Data) {
@@ -177,7 +177,7 @@ class MetaData {
       caller,
       oAuthType: 0,
       oAuth2Data,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 
   deleteOAuth2InfoForUser() {
@@ -185,7 +185,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 
 
@@ -194,7 +194,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 
   setOAuth2InfoForOrganization(oAuth2Data) {
@@ -203,7 +203,7 @@ class MetaData {
       caller,
       oAuthType: 0,
       oAuth2Data,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 
   deleteOAuth2InfoForOrganization() {
@@ -211,7 +211,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    });
+    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
   }
 }
 
