@@ -168,7 +168,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'getPluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 
   setOAuth2InfoForUser(oAuth2Data) {
@@ -177,7 +177,7 @@ class MetaData {
       caller,
       oAuthType: 0,
       oAuth2Data,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 
   deleteOAuth2InfoForUser() {
@@ -185,7 +185,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 
 
@@ -194,7 +194,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 
   setOAuth2InfoForOrganization(oAuth2Data) {
@@ -203,7 +203,7 @@ class MetaData {
       caller,
       oAuthType: 0,
       oAuth2Data,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 
   deleteOAuth2InfoForOrganization() {
@@ -211,7 +211,7 @@ class MetaData {
     return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
       caller,
       oAuthType: 0,
-    }).then(res => JSON.parse(res.oAuth2Data.toString('utf8')));
+    });
   }
 }
 
