@@ -32,10 +32,8 @@
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "lodash": "^4.17.10"
-  },
-  "peerDependencies": {
-    "grpc": "1.x"
+    "lodash": "^4.17.10",
+    "smartsheet-plugindata-sdk": "github:converseai/smartsheet-plugindata-sdk"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
