@@ -1,4 +1,5 @@
 /* eslint class-methods-use-this:off, no-console:off */
+console.log('loaded');
 const _ = require('lodash');
 const debug = require('debug');
 const RegData = require('../classes/regdata');
