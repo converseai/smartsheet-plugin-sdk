@@ -99,107 +99,67 @@ class MetaData {
   getPluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.getPluginData({
-      key,
-      caller,
-    });
+    return this.grpc.getPluginData(key, caller);
   }
 
   setPluginDataForUser(key, data, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.storePluginData({
-      key,
-      caller,
-      data,
-    });
+    return this.grpc.storePluginData(key, caller, data);
   }
 
   deletePluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.deletePluginData({
-      key,
-      caller,
-    });
+    return this.grpc.deletePluginData(key, caller);
   }
 
 
   getPluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.getPluginData({
-      key,
-      caller,
-    });
+    return this.grpc.getPluginData(key, caller);
   }
 
   setPluginDataForOrganization(key, data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.storePluginData({
-      key,
-      caller,
-      data,
-    });
+    return this.grpc.storePluginData(key, caller, data);
   }
 
   deletePluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginData({
-      key,
-      caller,
-    });
+    return this.grpc.deletePluginData(key, caller);
   }
 
 
   getOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.getPluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-    });
+    return this.grpc.getPluginOAuth2Info(caller, 0);
   }
 
   setOAuth2InfoForUser(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.storePluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-      oAuth2Data,
-    });
+    return this.grpc.storePluginOAuth2Info(caller, 0, oAuth2Data);
   }
 
   deleteOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-    });
+    return this.grpc.deletePluginOAuth2Info(caller, 0);
   }
 
 
   getOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-    });
+    return this.grpc.getPluginOAuth2Info(caller, 1);
   }
 
   setOAuth2InfoForOrganization(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-      oAuth2Data,
-    });
+    return this.grpc.storePluginOAuth2Info(caller, 1, oAuth2Data);
   }
 
   deleteOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info({
-      caller,
-      oAuthType: 0,
-    });
+    return this.grpc.deletePluginOAuth2Info(caller, 1);
   }
 }
 
