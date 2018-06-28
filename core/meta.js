@@ -1,6 +1,9 @@
 /* eslint class-methods-use-this: off, getter-return: off, no-empty-function: off */
 
 function promisifyGrpc(grpc, property, data) {
+  console.log(grpc);
+  console.log(property);
+  console.log(grpc[property]);
   return new Promise((resolve, reject) => {
     grpc[property](data, (err, res) => {
       if (err) {

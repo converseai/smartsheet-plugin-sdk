@@ -6,7 +6,6 @@
   "scripts": {
     "test": "mocha test/**/**.spec.js --recursive",
     "lint": "./node_modules/.bin/eslint ./**/*.js --fix",
-    "protos": "./proto.sh",
     "precommit": "npm test && ./node_modules/.bin/eslint ./**/*.js",
     "prepush": "npm test"
   },
