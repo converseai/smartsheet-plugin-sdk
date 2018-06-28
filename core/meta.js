@@ -1,4 +1,20 @@
-/* eslint class-methods-use-this: off, getter-return: off, no-empty-function: off */
+/*
+eslint class-methods-use-this: off,
+getter-return: off,
+no-empty-function: off,
+no-console: off
+*/
+const _ = require('lodash');
+const PluginData = require('smartsheet-plugindata-sdk/plugindata');
+
+let grpc;
+if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
+  grpc = new PluginData(process.env.PLUGINDATA_SERVICE);
+
+  process.on('exit', () => {
+    grpc.close();
+  });
+}
 
 function pluginCaller(caller) {
   return {
@@ -72,16 +88,13 @@ class Caller {
 }
 
 class MetaData {
-  constructor({ caller, registrationData, grpc } = {}) {
+  constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
     Object.defineProperty(this, 'caller', { get: () => (_caller) });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData) });
-    Object.defineProperty(this, 'grpc', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: grpc,
-    });
+    if (_.isNil(grpc)) {
+      console.error('GRPC is not loaded. Some methods may not function correctly.');
+    }
   }
 
   /**
@@ -99,67 +112,67 @@ class MetaData {
   getPluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.getPluginData(key, caller);
+    return grpc.getPluginData(key, caller);
   }
 
   setPluginDataForUser(key, data, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.storePluginData(key, caller, data);
+    return grpc.storePluginData(key, caller, data);
   }
 
   deletePluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return this.grpc.deletePluginData(key, caller);
+    return grpc.deletePluginData(key, caller);
   }
 
 
   getPluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.getPluginData(key, caller);
+    return grpc.getPluginData(key, caller);
   }
 
   setPluginDataForOrganization(key, data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.storePluginData(key, caller, data);
+    return grpc.storePluginData(key, caller, data);
   }
 
   deletePluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginData(key, caller);
+    return grpc.deletePluginData(key, caller);
   }
 
 
   getOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.getPluginOAuth2Info(caller, 0);
+    return grpc.getPluginOAuth2Info(caller, 0);
   }
 
   setOAuth2InfoForUser(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.storePluginOAuth2Info(caller, 0, oAuth2Data);
+    return grpc.storePluginOAuth2Info(caller, 0, oAuth2Data);
   }
 
   deleteOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info(caller, 0);
+    return grpc.deletePluginOAuth2Info(caller, 0);
   }
 
 
   getOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.getPluginOAuth2Info(caller, 1);
+    return grpc.getPluginOAuth2Info(caller, 1);
   }
 
   setOAuth2InfoForOrganization(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return this.grpc.storePluginOAuth2Info(caller, 1, oAuth2Data);
+    return grpc.storePluginOAuth2Info(caller, 1, oAuth2Data);
   }
 
   deleteOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return this.grpc.deletePluginOAuth2Info(caller, 1);
+    return grpc.deletePluginOAuth2Info(caller, 1);
   }
 }
 

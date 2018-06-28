@@ -1,5 +1,4 @@
 /* eslint class-methods-use-this:off, no-console:off */
-console.log('loaded');
 const _ = require('lodash');
 const debug = require('debug');
 const RegData = require('../classes/regdata');
@@ -8,7 +7,6 @@ const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
-const PluginData = require('smartsheet-plugindata-sdk/plugindata');
 
 const ON_REGISTER = 'onPluginRegister';
 const ON_UNREGISTER = 'onPluginUnregister';
@@ -60,9 +58,6 @@ const SDKCore = class SDKCore {
     this.response = response;
     this.functions = {};
     this.factory = {};
-    if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
-      this.grpc = new PluginData(process.env.PLUGINDATA_SERVICE);
-    }
   }
 
   error() {
@@ -99,7 +94,6 @@ const SDKCore = class SDKCore {
       const meta = new MetaData({
         caller,
         registrationData: buildRegistrationData(this.factory, registrationData),
-        grpc: this.grpc,
       });
 
       let params;
