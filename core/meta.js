@@ -1,19 +1,5 @@
 /* eslint class-methods-use-this: off, getter-return: off, no-empty-function: off */
 
-function promisifyGrpc(grpc, property, data) {
-  console.log(grpc);
-  console.log(property);
-  console.log(grpc[property]);
-  return new Promise((resolve, reject) => {
-    grpc[property](data, (err, res) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(res);
-    });
-  });
-}
-
 function pluginCaller(caller) {
   return {
     userUUID: caller.user.uuid,
@@ -113,62 +99,61 @@ class MetaData {
   getPluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return promisifyGrpc(this.grpc, 'getPluginData', {
+    return this.grpc.getPluginData({
       key,
       caller,
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+    });
   }
 
   setPluginDataForUser(key, data, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return promisifyGrpc(this.grpc, 'storePluginData', {
+    return this.grpc.storePluginData({
       key,
       caller,
-      data: Buffer.from(JSON.stringify(data)),
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+      data,
+    });
   }
 
   deletePluginDataForUser(key, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
     caller.userUUID = userUUID;
-    return promisifyGrpc(this.grpc, 'deletePluginData', {
+    return this.grpc.deletePluginData({
       key,
       caller,
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+    });
   }
 
 
   getPluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'getPluginData', {
+    return this.grpc.getPluginData({
       key,
       caller,
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+    });
   }
 
   setPluginDataForOrganization(key, data) {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'storePluginData', {
+    return this.grpc.storePluginData({
       key,
       caller,
-      data: Buffer.from(JSON.stringify(data)),
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+      data,
+    });
   }
 
   deletePluginDataForOrganization(key) {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'deletePluginData', {
+    return this.grpc.deletePluginData({
       key,
       caller,
-    }).then(res => JSON.parse(res.data.toString('utf8')));
+    });
   }
 
 
   getOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    console.log(caller);
-    return promisifyGrpc(this.grpc, 'getPluginOAuth2Info', {
+    return this.grpc.getPluginOAuth2Info({
       caller,
       oAuthType: 0,
     });
@@ -176,7 +161,7 @@ class MetaData {
 
   setOAuth2InfoForUser(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'storePluginOAuth2Info', {
+    return this.grpc.storePluginOAuth2Info({
       caller,
       oAuthType: 0,
       oAuth2Data,
@@ -185,7 +170,7 @@ class MetaData {
 
   deleteOAuth2InfoForUser() {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
+    return this.grpc.deletePluginOAuth2Info({
       caller,
       oAuthType: 0,
     });
@@ -194,7 +179,7 @@ class MetaData {
 
   getOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
+    return this.grpc.deletePluginOAuth2Info({
       caller,
       oAuthType: 0,
     });
@@ -202,7 +187,7 @@ class MetaData {
 
   setOAuth2InfoForOrganization(oAuth2Data) {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
+    return this.grpc.deletePluginOAuth2Info({
       caller,
       oAuthType: 0,
       oAuth2Data,
@@ -211,7 +196,7 @@ class MetaData {
 
   deleteOAuth2InfoForOrganization() {
     const caller = pluginCaller(this.caller);
-    return promisifyGrpc(this.grpc, 'deletePluginOAuth2Info', {
+    return this.grpc.deletePluginOAuth2Info({
       caller,
       oAuthType: 0,
     });
