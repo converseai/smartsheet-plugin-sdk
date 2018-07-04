@@ -12,7 +12,7 @@ if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
   grpc = new PluginData(process.env.PLUGINDATA_SERVICE);
 
   process.on('exit', () => {
-    grpc.close();
+    if (!_.isNil(grpc)) grpc.close();
   });
 }
 
