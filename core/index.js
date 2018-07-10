@@ -7,6 +7,7 @@ const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
+require('dotenv').config({ path: './usercode' });
 
 const ON_REGISTER = 'onPluginRegister';
 const ON_UNREGISTER = 'onPluginUnregister';
