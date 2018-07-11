@@ -6,7 +6,7 @@ const { spy, fake } = require('sinon');
 const { mockReq, mockRes } = require('sinon-express-mock');
 const SDK = require('../../interface/http');
 const { ErrorResponse } = require('../../response');
-const { FUNC_NOT_FOUND, INTERNAL_ERROR } = require('../../response/errors');
+const { FUNC_NOT_FOUND, INTERNAL_ERROR, FUNC_NOT_A_FUNCTION } = require('../../response/errors');
 const { fakeFactory, FUNC_NAME } = require('./fakes');
 
 const { expect } = chai;
@@ -36,7 +36,7 @@ describe('HTTP', () => {
         return expect(sdk.handleRequest()).to.be.fulfilled.then(() =>
           expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND())));
       });
-      it('Function not found', () => {
+      it('Function not found (no request)', () => {
         sdk = SDK.create({ request, response });
         const func = spy();
         sdk.setFunctions({ func });
@@ -45,9 +45,27 @@ describe('HTTP', () => {
           expect(response.json).to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND()));
         });
       });
-      it('Internal Error', () => {
-        sdk = SDK.create({ request, response });
+      it('Function not found (no function)', () => {
         request.body = { func: FUNC_NAME };
+        sdk = SDK.create({ request, response });
+        sdk.setFunctions({});
+        return expect(sdk.handleRequest({ func: FUNC_NAME })).to.be.fulfilled.then(() => {
+          expect(response.json)
+            .to.be.calledWith(new ErrorResponse(FUNC_NOT_FOUND({ func: FUNC_NAME })));
+        });
+      });
+      it('Function not a function', () => {
+        request.body = { func: FUNC_NAME };
+        sdk = SDK.create({ request, response });
+        sdk.setFunctions({ [FUNC_NAME]: FUNC_NAME });
+        return expect(sdk.handleRequest({ func: FUNC_NAME })).to.be.fulfilled.then(() => {
+          expect(response.json)
+            .to.be.calledWith(new ErrorResponse(FUNC_NOT_A_FUNCTION({ func: FUNC_NAME })));
+        });
+      });
+      it('Internal Error', () => {
+        request.body = { func: FUNC_NAME };
+        sdk = SDK.create({ request, response });
 
         const error = new TypeError('internal error is thrown');
 

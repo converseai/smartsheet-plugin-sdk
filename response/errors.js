@@ -29,9 +29,18 @@ const FUNC_NOT_FOUND = ({ func } = {}) => {
   return error;
 };
 
+const FUNC_NOT_A_FUNCTION = ({ func } = {}) => {
+  const error = { status: 500, code: 'NOT_A_FUNCTION', message: 'Property `func` is not a function. Check property definition.' };
+  if (!_.isNil(func)) {
+    error.message = `Property \`${func}\` is not a function. Check \`${func}\` definition.`;
+  }
+  return error;
+};
+
 module.exports = {
   DEFAULT: { status: 500, code: 'ERROR', message: 'An error has occurred.' },
   INTERNAL_ERROR,
   BAD_RESPONSE,
   FUNC_NOT_FOUND,
+  FUNC_NOT_A_FUNCTION,
 };

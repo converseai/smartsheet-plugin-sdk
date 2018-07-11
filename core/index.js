@@ -9,7 +9,7 @@ const OnRegData = require('../classes/onregdata');
 const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
-const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
+const { INTERNAL_ERROR, FUNC_NOT_FOUND, FUNC_NOT_A_FUNCTION } = require('../response/errors');
 
 const ON_REGISTER = 'onPluginRegister';
 const ON_UNREGISTER = 'onPluginUnregister';
@@ -87,6 +87,10 @@ const SDKCore = class SDKCore {
 
       if (!this.request.body.func || !this.functions[this.request.body.func]) {
         throw new ErrorResponse(FUNC_NOT_FOUND({ func: this.request.body.func }));
+      }
+
+      if (!_.isFunction(this.functions[this.request.body.func])) {
+        throw new ErrorResponse(FUNC_NOT_A_FUNCTION({ func: this.request.body.func }));
       }
 
       const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {} }
