@@ -17,6 +17,9 @@ const ON_UNREGISTER = 'onPluginUnregister';
 const log = debug('smartsheet-plugin-sdk');
 const err = debug('smartsheet-plugin-sdk:err');
 
+log.log = console.log;
+err.log = console.log;
+
 function getRegistrationScope(factory, property) {
   return (!_.isNil(factory)
   && !_.isNil(factory.registrationData)
