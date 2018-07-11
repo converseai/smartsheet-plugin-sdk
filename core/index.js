@@ -1,6 +1,8 @@
 /* eslint class-methods-use-this:off, no-console:off */
-const _ = require('lodash');
 const path = require('path');
+require('dotenv').config({ path: path.join(process.cwd(), 'usercode/.env') });
+
+const _ = require('lodash');
 const debug = require('debug');
 const RegData = require('../classes/regdata');
 const OnRegData = require('../classes/onregdata');
@@ -8,7 +10,6 @@ const FuncData = require('../classes/funcdata');
 const MetaData = require('./meta');
 const { Response, ErrorResponse, JSONResponse } = require('../response');
 const { INTERNAL_ERROR, FUNC_NOT_FOUND } = require('../response/errors');
-require('dotenv').config({ path: path.join(process.cwd(), 'usercode/.env') });
 
 const ON_REGISTER = 'onPluginRegister';
 const ON_UNREGISTER = 'onPluginUnregister';
