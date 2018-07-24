@@ -122,6 +122,9 @@ const SDKCore = class SDKCore {
       }
       log(value);
       this.respond(value);
+      if (_.isFunction(value.callback)) {
+        value.callback();
+      }
       return value;
     }).catch((e) => {
       let response;

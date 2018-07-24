@@ -24,6 +24,10 @@ module.exports = class Response {
     if (!_.isNil(value)) this.value = value;
   }
 
+  setCallback(callback) {
+    if (!_.isNil(callback)) this.callback = callback;
+  }
+
   getType() {
     return this.type;
   }
