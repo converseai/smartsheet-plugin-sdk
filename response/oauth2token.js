@@ -2,7 +2,23 @@ const _ = require('lodash');
 const { TYPE_JSON } = require('./consts');
 const Response = require('./response');
 
-module.exports = class OAuth2Token extends Response {
+/**
+ * @class OAuth2Token
+ * @extends Response
+ * @classdesc A Response with a return type of `JSON`.
+ *  This response is used during an OAuth2 process by providing the caller
+ *  with the details specific to the external authentication system.
+ * @param {Object} config configuration object.
+ * @param {string} config.access_token OAuth2 access token.
+ * @param {string} config.token_type OAuth2 token type.
+ * @param {string} config.refresh_token OAuth2 refresh token.
+ * @param {string} config.expires_in OAuth2 expiry time.
+ * @param {Object} config.grant_type OAuth2 grant type.
+ * @param {Object} config.metadata A Key/Value map of metadata.
+ * @param {Object} config.redirectURL OAuth2 redirect URL.
+ * @param {Object} config.message OAuth2 user message.
+ */
+class OAuth2Token extends Response {
   constructor({
     access_token,
     token_type,
@@ -26,7 +42,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the access token for the OAuth2 payload.
-  * @param {String} access_token The OAuth2 access token for the response.
+  * @param {String} access_token OAuth2 access token.
   * @public
   */
   setAccessToken(access_token) {
@@ -40,7 +56,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the token type for the OAuth2 payload.
-  * @param {String} token_type The OAuth2 token type for the response.
+  * @param {String} token_type OAuth2 token type.
   * @public
   */
   setTokenType(token_type) {
@@ -54,7 +70,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the refresh token for the OAuth2 payload.
-  * @param {String} refresh_token The OAuth2 refresh token for the response.
+  * @param {String} refresh_token OAuth2 refresh token.
   * @public
   */
   setRefreshToken(refresh_token) {
@@ -68,7 +84,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the expiry time for the OAuth2 payload.
-  * @param {String} expires_in The OAuth2 expiry time for the response.
+  * @param {String} expires_in OAuth2 expiry time.
   * @public
   */
   setExpiresIn(expires_in) {
@@ -81,8 +97,8 @@ module.exports = class OAuth2Token extends Response {
   }
 
   /**
-  * Sets the expiry time for the OAuth2 payload.
-  * @param {String} grant_type The OAuth2 expiry time for the response.
+  * Sets the grant type for the OAuth2 payload.
+  * @param {String} grant_type OAuth2 grant type.
   * @public
   */
   setGrantType(grant_type) {
@@ -96,7 +112,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the metadata for the OAuth2 payload.
-  * @param {Object} [metadata] A Key/Value map of metadata for the OAuth2 response.
+  * @param {Object} [metadata] A Key/Value map of metadata.
   * @public
   */
   setMetadata(metadata) {
@@ -110,7 +126,7 @@ module.exports = class OAuth2Token extends Response {
 
   /**
   * Sets the redirect URL for the OAuth2 payload.
-  * @param {String} [redirectURL] An OAuth2 redirect URL for the response.
+  * @param {String} [redirectURL] OAuth2 redirect URL.
   * @public
   */
   setRedirectURL(redirectURL) {
@@ -124,7 +140,7 @@ module.exports = class OAuth2Token extends Response {
   /**
   * Sets the user message for the OAuth2 payload.
   * If redirect URL is set then this value is ignored.
-  * @param {String} [message] The OAuth2 user message for the response.
+  * @param {String} [message] OAuth2 user message.
   * @public
   */
   setMessage(message) {
@@ -134,4 +150,6 @@ module.exports = class OAuth2Token extends Response {
       this.setValue(value);
     }
   }
-};
+}
+
+module.exports = OAuth2Token;

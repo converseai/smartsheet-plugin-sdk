@@ -1,9 +1,5 @@
 const _ = require('lodash');
 
-/**
- * @param {Object} param
- * @param {String} param.func the name of the function that has a bad response.
- */
 const BAD_RESPONSE = ({ func } = {}) => {
   const error = { status: 500, code: 'BAD_RESPONSE', message: 'Function has not returned an object of type Response.' };
   if (!_.isNil(func)) {
@@ -44,3 +40,11 @@ module.exports = {
   FUNC_NOT_FOUND,
   FUNC_NOT_A_FUNCTION,
 };
+
+
+/**
+ * @typedef Error
+ * @property {number} status an http status code.
+ * @property {string} code a machine-readable string.
+ * @property {string} message a human-readable string.
+ */

@@ -1,34 +1,12 @@
 /* eslint no-underscore-dangle: off */
 
 /**
- * @typedef FunctionConfig
- * @type {object}
- * @property {funcData} funcData
- * @property {httpData} httpData
- */
-
-/**
- * @typedef funcData
- * @type {object}
- */
-
-/**
- * @typedef httpData
- * @type {object}
- * @property {Object} body
- * @property {Object} formData
- * @property {Object} queryParams
-*/
-
-/**
  * @class FuncData
  * @classdesc Abstract base class for all function parameter classes.
+ * @param {FunctionConfig} config
+ * @param {funcData} config.funcData
  */
 class FuncData {
-  /**
-   * @param {FunctionConfig} config
-   * @param {funcData} config.funcData
-   */
   constructor({ funcData = {}, httpData = {} } = {}) {
     const { queryParams = {}, formData = {}, body = {} } = httpData;
     Object.defineProperties(this, {
@@ -87,3 +65,23 @@ class FuncData {
 }
 
 module.exports = FuncData;
+
+/**
+ * @typedef FunctionConfig
+ * @type {Object}
+ * @property {funcData} funcData
+ * @property {httpData} httpData
+ */
+
+/**
+ * @typedef funcData
+ * @type {Object}
+ */
+
+/**
+ * @typedef httpData
+ * @type {object}
+ * @property {Object} body
+ * @property {Object} formData
+ * @property {Object} queryParams
+*/

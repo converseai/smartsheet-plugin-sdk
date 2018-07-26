@@ -1,7 +1,29 @@
 const { HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_TEXT, TYPE_TEXT } = require('./consts');
 const HTTPResponse = require('./http');
 
-module.exports = class TEXTResponse extends HTTPResponse {
+/**
+ * @class TEXTResponse
+ * @extends HTTPResponse
+ * @classdesc An HTTPResponse with a return type of `TEXT`.
+ *  Use this response to return TEXT from a function. If this type of response
+ *  is used then `value` is expected to be a string with a valid String.
+ *  This object also sets the Content-Type for HTTP calls to `text/plain`.
+ * @example
+  ```
+  const TEXTResponse = require('smartsheet-plugin-sdk/response/text');
+  const response = new TEXTResponse({
+    value: "Hello, World!"
+  });
+  return response;
+
+  // 200 Ok
+  // Content-Type: "text/plain"
+  // Hello, World!
+  ```
+ * @param {Object} config configuration object.
+ * @param {*} config.value user returned value.
+ */
+class TEXTResponse extends HTTPResponse {
   constructor({ value } = {}) {
     super({
       type: TYPE_TEXT,
@@ -10,4 +32,6 @@ module.exports = class TEXTResponse extends HTTPResponse {
     });
     this.setValue(value);
   }
-};
+}
+
+module.exports = TEXTResponse;

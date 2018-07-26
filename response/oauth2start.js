@@ -2,7 +2,21 @@ const _ = require('lodash');
 const { TYPE_JSON } = require('./consts');
 const Response = require('./response');
 
-module.exports = class OAuth2Start extends Response {
+/**
+ * @class OAuth2Start
+ * @extends Response
+ * @classdesc A Response with a return type of `JSON`.
+ *  This response is used to start an OAuth2 process by providing the caller
+ *  with the details specific to the external authentication system. The caller
+ *  will then initiate the OAuth2 process with the given details.
+ * @param {Object} config configuration object.
+ * @param {string} config.oAuth2URL the OAuth2 URI.
+ * @param {string} config.clientId the OAuth2 Client ID.
+ * @param {string} config.scope the OAuth2 scope.
+ * @param {string} config.state the OAuth2 state.
+ * @param {Object} config.extraParams the OAuth2 URL parameters.
+ */
+class OAuth2Start extends Response {
   constructor({
     oAuth2URL,
     clientId,
@@ -21,7 +35,7 @@ module.exports = class OAuth2Start extends Response {
   /**
   * Sets the URI for the OAuth2 payload. Get parameters will be
   * discarded from this string, use setExtraParams to pass parameters.
-  * @param {String} oAuth2URL The OAuth2 URI for the response.
+  * @param {String} oAuth2URL the OAuth2 URI.
   * @public
   */
   setOAuth2URI(oAuth2URL) {
@@ -35,7 +49,7 @@ module.exports = class OAuth2Start extends Response {
 
   /**
   * Sets the Client ID for the OAuth2 payload.
-  * @param {String} clientId The OAuth2 Client ID for the response.
+  * @param {String} clientId the OAuth2 Client ID.
   * @public
   */
   setClientID(clientId) {
@@ -49,7 +63,7 @@ module.exports = class OAuth2Start extends Response {
 
   /**
   * Sets the scope for the OAuth2 payload.
-  * @param {String} scope The OAuth2 scope for the response.
+  * @param {String} scope the OAuth2 scope.
   * @public
   */
   setScope(scope) {
@@ -63,7 +77,7 @@ module.exports = class OAuth2Start extends Response {
 
   /**
   * Sets the state for the OAuth2 payload.
-  * @param {String} [state] The OAuth2 state for the response.
+  * @param {String} [state] the OAuth2 state.
   * @public
   */
   setState(state) {
@@ -77,7 +91,7 @@ module.exports = class OAuth2Start extends Response {
 
   /**
   * Sets the parameters to be attached to URL for the OAuth2 payload.
-  * @param {Object} [extraParams] The OAuth2 URL parameters for the response.
+  * @param {Object} [extraParams] the OAuth2 URL parameters.
   * @public
   */
   setExtraParams(extraParams) {
@@ -88,4 +102,6 @@ module.exports = class OAuth2Start extends Response {
       this.setValue(value);
     }
   }
-};
+}
+
+module.exports = OAuth2Start;
