@@ -20,6 +20,8 @@
 <dl>
 <dt><a href="#CallerDataObject">CallerDataObject</a></dt>
 <dd></dd>
+<dt><a href="#CallToken">CallToken</a></dt>
+<dd></dd>
 <dt><a href="#CallerObject">CallerObject</a></dt>
 <dd></dd>
 <dt><a href="#OAuth2Info">OAuth2Info</a></dt>
@@ -282,17 +284,34 @@ Delete the OAuth2 information for the current organization.
 | uuid | <code>string</code> | 
 | data | <code>Object</code> | 
 
+<a name="CallToken"></a>
+
+## CallToken
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| validUntil | <code>number</code> | a timestamp that this callToken is valid to. |
+| signature | <code>Object</code> | a unique validation token for the plugindata service. |
+| payload | <code>Object</code> |  |
+| payload.pluginUUID | <code>string</code> | the plugin UUID. |
+| payload.organizationUUID | <code>string</code> | the organization UUID. |
+| payload.workspaceUUID | <code>string</code> | the workspace UUID. |
+
 <a name="CallerObject"></a>
 
 ## CallerObject
 **Kind**: global typedef  
 **Properties**
 
-| Name | Type |
-| --- | --- |
-| user | [<code>CallerDataObject</code>](#CallerDataObject) | 
-| organization | [<code>CallerDataObject</code>](#CallerDataObject) | 
-| workspace | [<code>CallerDataObject</code>](#CallerDataObject) | 
+| Name | Type | Description |
+| --- | --- | --- |
+| user | [<code>CallerDataObject</code>](#CallerDataObject) |  |
+| organization | [<code>CallerDataObject</code>](#CallerDataObject) |  |
+| workspace | [<code>CallerDataObject</code>](#CallerDataObject) |  |
+| callToken | [<code>CallToken</code>](#CallToken) |  |
+| pluginURI | <code>string</code> | a uri to the current plugin. |
 
 <a name="OAuth2Info"></a>
 

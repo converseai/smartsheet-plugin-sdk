@@ -52,7 +52,7 @@ class CallerData {
  * @param {CallerObject} config configuration object.
  */
 class Caller {
-  constructor({ user, organization, workspace, callToken } = {}) {
+  constructor({ user, organization, workspace, callToken, pluginURI } = {}) {
     const uData = new CallerData(user);
     const pData = new CallerData(organization);
     const wData = new CallerData(workspace);
@@ -60,6 +60,7 @@ class Caller {
     Object.defineProperty(this, 'organization', { get: () => pData });
     Object.defineProperty(this, 'workspace', { get: () => wData });
     Object.defineProperty(this, 'callToken', { get: () => callToken });
+    Object.defineProperty(this, 'pluginURI', { get: () => pluginURI });
   }
 
   /**
@@ -242,10 +243,22 @@ module.exports = MetaData;
  */
 
 /**
+ * @typedef CallToken
+ * @property {number} validUntil a timestamp that this callToken is valid to.
+ * @property {Object} signature a unique validation token for the plugindata service.
+ * @property {Object} payload
+ * @property {string} payload.pluginUUID the plugin UUID.
+ * @property {string} payload.organizationUUID the organization UUID.
+ * @property {string} payload.workspaceUUID the workspace UUID.
+ */
+
+/**
  * @typedef CallerObject
  * @property {CallerDataObject} user
  * @property {CallerDataObject} organization
  * @property {CallerDataObject} workspace
+ * @property {CallToken} callToken
+ * @property {string} pluginURI a uri to the current plugin.
  */
 
 /**
