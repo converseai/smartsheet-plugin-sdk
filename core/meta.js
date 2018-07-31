@@ -28,8 +28,8 @@ function pluginCaller(caller) {
  */
 class CallerData {
   constructor({ uuid, data } = {}) {
-    Object.defineProperty(this, 'uuid', { get: () => (uuid) });
-    Object.defineProperty(this, 'data', { get: () => (data) });
+    Object.defineProperty(this, 'uuid', { get: () => (uuid), enumerable: true });
+    Object.defineProperty(this, 'data', { get: () => (data), enumerable: true });
   }
 
   /**
@@ -56,11 +56,11 @@ class Caller {
     const uData = new CallerData(user);
     const pData = new CallerData(organization);
     const wData = new CallerData(workspace);
-    Object.defineProperty(this, 'user', { get: () => uData });
-    Object.defineProperty(this, 'organization', { get: () => pData });
-    Object.defineProperty(this, 'workspace', { get: () => wData });
-    Object.defineProperty(this, 'callToken', { get: () => callToken });
-    Object.defineProperty(this, 'pluginURI', { get: () => pluginURI });
+    Object.defineProperty(this, 'user', { get: () => uData, enumerable: true });
+    Object.defineProperty(this, 'organization', { get: () => pData, enumerable: true });
+    Object.defineProperty(this, 'workspace', { get: () => wData, enumerable: true });
+    Object.defineProperty(this, 'callToken', { get: () => callToken, enumerable: true });
+    Object.defineProperty(this, 'pluginURI', { get: () => pluginURI, enumerable: true });
   }
 
   /**
@@ -94,8 +94,8 @@ class Caller {
 class MetaData {
   constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
-    Object.defineProperty(this, 'caller', { get: () => (_caller) });
-    Object.defineProperty(this, 'registrationData', { get: () => (registrationData) });
+    Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
+    Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
     if (_.isNil(grpc)) {
       console.error('GRPC is not loaded. Some methods may not function correctly.');
     }
