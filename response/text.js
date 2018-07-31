@@ -6,7 +6,7 @@ const HTTPResponse = require('./http');
  * @extends HTTPResponse
  * @classdesc An HTTPResponse with a return type of `TEXT`.
  *  Use this response to return TEXT from a function. If this type of response
- *  is used then `value` is expected to be a string with a valid String.
+ *  is used then `value` is expected to be a string with a valid string.
  *  This object also sets the Content-Type for HTTP calls to `text/plain`.
  * @example
   ```

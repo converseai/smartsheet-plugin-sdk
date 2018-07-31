@@ -34,13 +34,13 @@ class CallerData {
 
   /**
    * A universal unique identifier for this particular caller object.
-   * @type String
+   * @type string
    */
   get uuid() {}
 
   /**
    * Data for this particular caller object.
-   * @type String
+   * @type string
    */
   get data() {}
 }

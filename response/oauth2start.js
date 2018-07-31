@@ -35,7 +35,7 @@ class OAuth2Start extends Response {
   /**
   * Sets the URI for the OAuth2 payload. Get parameters will be
   * discarded from this string, use setExtraParams to pass parameters.
-  * @param {String} oAuth2URL the OAuth2 URI.
+  * @param {string} oAuth2URL the OAuth2 URI.
   * @public
   */
   setOAuth2URI(oAuth2URL) {
@@ -49,7 +49,7 @@ class OAuth2Start extends Response {
 
   /**
   * Sets the Client ID for the OAuth2 payload.
-  * @param {String} clientId the OAuth2 Client ID.
+  * @param {string} clientId the OAuth2 Client ID.
   * @public
   */
   setClientID(clientId) {
@@ -63,7 +63,7 @@ class OAuth2Start extends Response {
 
   /**
   * Sets the scope for the OAuth2 payload.
-  * @param {String} scope the OAuth2 scope.
+  * @param {string} scope the OAuth2 scope.
   * @public
   */
   setScope(scope) {
@@ -77,7 +77,7 @@ class OAuth2Start extends Response {
 
   /**
   * Sets the state for the OAuth2 payload.
-  * @param {String} [state] the OAuth2 state.
+  * @param {string} [state] the OAuth2 state.
   * @public
   */
   setState(state) {

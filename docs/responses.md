@@ -42,7 +42,7 @@
 <dt><a href="#TEXTResponse">TEXTResponse</a> ⇐ <code><a href="#HTTPResponse">HTTPResponse</a></code></dt>
 <dd><p>An HTTPResponse with a return type of <code>TEXT</code>.
  Use this response to return TEXT from a function. If this type of response
- is used then <code>value</code> is expected to be a string with a valid String.
+ is used then <code>value</code> is expected to be a string with a valid string.
  This object also sets the Content-Type for HTTP calls to <code>text/plain</code>.</p>
 </dd>
 <dt><a href="#XMLResponse">XMLResponse</a> ⇐ <code><a href="#HTTPResponse">HTTPResponse</a></code></dt>
@@ -746,7 +746,7 @@ discarded from this string, use setExtraParams to pass parameters.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| oAuth2URL | <code>String</code> | the OAuth2 URI. |
+| oAuth2URL | <code>string</code> | the OAuth2 URI. |
 
 <a name="OAuth2Start+setClientID"></a>
 
@@ -758,7 +758,7 @@ Sets the Client ID for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| clientId | <code>String</code> | the OAuth2 Client ID. |
+| clientId | <code>string</code> | the OAuth2 Client ID. |
 
 <a name="OAuth2Start+setScope"></a>
 
@@ -770,7 +770,7 @@ Sets the scope for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| scope | <code>String</code> | the OAuth2 scope. |
+| scope | <code>string</code> | the OAuth2 scope. |
 
 <a name="OAuth2Start+setState"></a>
 
@@ -782,7 +782,7 @@ Sets the state for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [state] | <code>String</code> | the OAuth2 state. |
+| [state] | <code>string</code> | the OAuth2 state. |
 
 <a name="OAuth2Start+setExtraParams"></a>
 
@@ -913,7 +913,7 @@ Sets the access token for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| access_token | <code>String</code> | OAuth2 access token. |
+| access_token | <code>string</code> | OAuth2 access token. |
 
 <a name="OAuth2Token+setTokenType"></a>
 
@@ -925,7 +925,7 @@ Sets the token type for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| token_type | <code>String</code> | OAuth2 token type. |
+| token_type | <code>string</code> | OAuth2 token type. |
 
 <a name="OAuth2Token+setRefreshToken"></a>
 
@@ -937,7 +937,7 @@ Sets the refresh token for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| refresh_token | <code>String</code> | OAuth2 refresh token. |
+| refresh_token | <code>string</code> | OAuth2 refresh token. |
 
 <a name="OAuth2Token+setExpiresIn"></a>
 
@@ -949,7 +949,7 @@ Sets the expiry time for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| expires_in | <code>String</code> | OAuth2 expiry time. |
+| expires_in | <code>string</code> | OAuth2 expiry time. |
 
 <a name="OAuth2Token+setGrantType"></a>
 
@@ -961,7 +961,7 @@ Sets the grant type for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| grant_type | <code>String</code> | OAuth2 grant type. |
+| grant_type | <code>string</code> | OAuth2 grant type. |
 
 <a name="OAuth2Token+setMetadata"></a>
 
@@ -985,7 +985,7 @@ Sets the redirect URL for the OAuth2 payload.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [redirectURL] | <code>String</code> | OAuth2 redirect URL. |
+| [redirectURL] | <code>string</code> | OAuth2 redirect URL. |
 
 <a name="OAuth2Token+setMessage"></a>
 
@@ -998,7 +998,7 @@ If redirect URL is set then this value is ignored.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [message] | <code>String</code> | OAuth2 user message. |
+| [message] | <code>string</code> | OAuth2 user message. |
 
 <a name="Response+getError"></a>
 
@@ -1160,7 +1160,7 @@ Set a callback function to run after the function has returned the response.
 ## TEXTResponse ⇐ [<code>HTTPResponse</code>](#HTTPResponse)
 An HTTPResponse with a return type of `TEXT`.
  Use this response to return TEXT from a function. If this type of response
- is used then `value` is expected to be a string with a valid String.
+ is used then `value` is expected to be a string with a valid string.
  This object also sets the Content-Type for HTTP calls to `text/plain`.
 
 **Kind**: global class  

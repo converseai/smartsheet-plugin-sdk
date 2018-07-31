@@ -37,8 +37,8 @@ A meta data class that holds information regarding a specific caller data object
 
 * [CallerData](#CallerData)
     * [new CallerData(config)](#new_CallerData_new)
-    * [.uuid](#CallerData+uuid) : <code>String</code>
-    * [.data](#CallerData+data) : <code>String</code>
+    * [.uuid](#CallerData+uuid) : <code>string</code>
+    * [.data](#CallerData+data) : <code>string</code>
 
 <a name="new_CallerData_new"></a>
 
@@ -50,13 +50,13 @@ A meta data class that holds information regarding a specific caller data object
 
 <a name="CallerData+uuid"></a>
 
-### callerData.uuid : <code>String</code>
+### callerData.uuid : <code>string</code>
 A universal unique identifier for this particular caller object.
 
 **Kind**: instance property of [<code>CallerData</code>](#CallerData)  
 <a name="CallerData+data"></a>
 
-### callerData.data : <code>String</code>
+### callerData.data : <code>string</code>
 Data for this particular caller object.
 
 **Kind**: instance property of [<code>CallerData</code>](#CallerData)  
