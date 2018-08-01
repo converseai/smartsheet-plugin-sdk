@@ -7,7 +7,10 @@
     "test": "mocha test/**/**.spec.js --recursive",
     "lint": "./node_modules/.bin/eslint ./**/*.js --fix",
     "precommit": "npm test && npm run docs && ./node_modules/.bin/eslint ./**/*.js",
-    "docs": "./node_modules/.bin/jsdoc2md response/**.js > ./docs/responses.md && ./node_modules/.bin/jsdoc2md core/meta.js > ./docs/meta.md",
+    "docs-responses": "./node_modules/.bin/jsdoc2md response/**.js > ./docs/responses.md",
+    "docs-meta": "./node_modules/.bin/jsdoc2md core/meta.js > ./docs/meta.md",
+    "docs-params": "./node_modules/.bin/jsdoc2md classes/funcdata.js > ./docs/params.md",
+    "docs": "npm run docs-responses && npm run docs-meta && npm run docs-params",
     "prepush": "npm test"
   },
   "keywords": [
