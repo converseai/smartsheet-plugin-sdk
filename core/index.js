@@ -96,6 +96,8 @@ const SDKCore = class SDKCore {
         throw new ErrorResponse(FUNC_NOT_A_FUNCTION({ func: this.request.body.func }));
       }
 
+      log('Request Body:', this.request.body);
+
       const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {} }
         = this.request.body;
 
