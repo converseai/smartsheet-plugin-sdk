@@ -120,7 +120,7 @@ This class contains all the meta data from the caller that is passed into
     * [.setPluginDataForOrganization(key, data)](#MetaData+setPluginDataForOrganization) ⇒ <code>\*</code>
     * [.deletePluginDataForOrganization(key)](#MetaData+deletePluginDataForOrganization)
     * [.getOAuth2InfoForUser()](#MetaData+getOAuth2InfoForUser) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
-    * [.setOAuth2InfoForUser(oAuth2Data)](#MetaData+setOAuth2InfoForUser) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
+    * [.setOAuth2InfoForUser(oAuth2Data, [userUUID])](#MetaData+setOAuth2InfoForUser) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
     * [.deleteOAuth2InfoForUser()](#MetaData+deleteOAuth2InfoForUser)
     * [.getOAuth2InfoForOrganization()](#MetaData+getOAuth2InfoForOrganization) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
     * [.setOAuth2InfoForOrganization(oAuth2Data)](#MetaData+setOAuth2InfoForOrganization) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
@@ -232,7 +232,7 @@ Gets the OAuth2 information for the current user.
 **Returns**: [<code>OAuth2Info</code>](#OAuth2Info) - OAuth2 information.  
 <a name="MetaData+setOAuth2InfoForUser"></a>
 
-### metaData.setOAuth2InfoForUser(oAuth2Data) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
+### metaData.setOAuth2InfoForUser(oAuth2Data, [userUUID]) ⇒ [<code>OAuth2Info</code>](#OAuth2Info)
 Override the OAuth2 information for the current user.
 
 **Kind**: instance method of [<code>MetaData</code>](#MetaData)  
@@ -241,6 +241,7 @@ Override the OAuth2 information for the current user.
 | Param | Type | Description |
 | --- | --- | --- |
 | oAuth2Data | [<code>OAuth2Info</code>](#OAuth2Info) | OAuth2 information to override with. |
+| [userUUID] | <code>string</code> | the user UUID the OAuth2 information should be overriden for. |
 
 <a name="MetaData+deleteOAuth2InfoForUser"></a>
 
