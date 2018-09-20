@@ -191,10 +191,12 @@ class MetaData {
   /**
    * Override the OAuth2 information for the current user.
    * @param {OAuth2Info} oAuth2Data OAuth2 information to override with.
+   * @param {string} [userUUID] the user UUID the OAuth2 information should be overriden for.
    * @returns {OAuth2Info} OAuth2 information.
    */
-  setOAuth2InfoForUser(oAuth2Data) {
+  setOAuth2InfoForUser(oAuth2Data, userUUID = this.caller.user.uuid) {
     const caller = pluginCaller(this.caller);
+    caller.userUUID = userUUID;
     return grpc.storePluginOAuth2Info(caller, 0, oAuth2Data);
   }
 
