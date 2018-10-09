@@ -6,11 +6,32 @@ no-console: off
 */
 const _ = require('lodash');
 const PluginData = require('smartsheet-plugindata-sdk/plugindata');
+const StatsD = require('node-statsd');
 
 let grpc;
 if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
   grpc = new PluginData(process.env.PLUGINDATA_SERVICE);
 }
+
+const statsDConfig = { mock: true };
+
+if (!_.isNil(process.env.NODE_ENV === 'production')) {
+  statsDConfig.mock = false;
+}
+
+if (!_.isNil(process.env.STATSD_HOST)) {
+  statsDConfig.host = process.env.STATSD_HOST;
+}
+
+if (!_.isNil(process.env.STATSD_PORT)) {
+  statsDConfig.port = process.env.STATSD_PORT;
+}
+
+if (!_.isNil(process.env.STATSD_PREFIX)) {
+  statsDConfig.prefix = process.env.STATSD_PREFIX;
+}
+
+const statsDClient = new StatsD(statsDConfig);
 
 function pluginCaller(caller) {
   return {
@@ -112,6 +133,10 @@ class MetaData {
    * @type RegistrationData
    */
   get registrationData() {}
+
+  getStatsDClient() {
+    return statsDClient;
+  }
 
   /**
    * Gets the plugin data stored against the given key and user.
