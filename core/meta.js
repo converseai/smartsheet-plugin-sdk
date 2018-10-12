@@ -134,6 +134,10 @@ class MetaData {
    */
   get registrationData() {}
 
+  /**
+   * Returns a client for StatsD.
+   * @external https://github.com/sivy/node-statsd
+   */
   getStatsDClient() {
     return statsDClient;
   }
