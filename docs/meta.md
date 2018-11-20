@@ -26,6 +26,12 @@
 <dd></dd>
 <dt><a href="#OAuth2Info">OAuth2Info</a></dt>
 <dd></dd>
+<dt><a href="#RegistrationData">RegistrationData</a></dt>
+<dd><p>An object containing all the registration data for each scope: user,
+organisation, and workspace. The <code>registrationData</code> object is attached to the MetaData
+object for every function including the special case functions of <code>onPluginRegister</code>
+and <code>onPluginUnregister</code>.</p>
+</dd>
 </dl>
 
 <a name="CallerData"></a>
@@ -112,7 +118,7 @@ This class contains all the meta data from the caller that is passed into
 * [MetaData](#MetaData)
     * [new MetaData(config)](#new_MetaData_new)
     * [.caller](#MetaData+caller) : [<code>Caller</code>](#Caller)
-    * [.registrationData](#MetaData+registrationData) : <code>RegistrationData</code>
+    * [.registrationData](#MetaData+registrationData) : [<code>RegistrationData</code>](#RegistrationData)
     * [.getPluginDataForUser(key, [userUUID])](#MetaData+getPluginDataForUser) ⇒ <code>\*</code>
     * [.setPluginDataForUser(key, data, [userUUID])](#MetaData+setPluginDataForUser) ⇒ <code>\*</code>
     * [.deletePluginDataForUser(key, [userUUID])](#MetaData+deletePluginDataForUser)
@@ -144,8 +150,10 @@ Metadata about the incoming request.
 **Kind**: instance property of [<code>MetaData</code>](#MetaData)  
 <a name="MetaData+registrationData"></a>
 
-### metaData.registrationData : <code>RegistrationData</code>
-Registration data for the incoming request.
+### metaData.registrationData : [<code>RegistrationData</code>](#RegistrationData)
+Registration data for the incoming request. The registrationData object
+consists of all three scopes: user, organization, and workspace and is
+attached to every function call.
 
 **Kind**: instance property of [<code>MetaData</code>](#MetaData)  
 <a name="MetaData+getPluginDataForUser"></a>
@@ -330,3 +338,53 @@ Delete the OAuth2 information for the current organization.
 | redirect_uri | <code>string</code> | 
 | metadata | <code>Object.&lt;string, string&gt;</code> | 
 
+<a name="RegistrationData"></a>
+
+## RegistrationData
+An object containing all the registration data for each scope: user,
+organisation, and workspace. The `registrationData` object is attached to the MetaData
+object for every function including the special case functions of `onPluginRegister`
+and `onPluginUnregister`.
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| user | <code>Object.&lt;string, \*&gt;</code> | a map of registration data stored against the user. |
+| organization | <code>Object.&lt;string, \*&gt;</code> | a map of registration data stored against the organisation. |
+| workspace | <code>Object.&lt;string, \*&gt;</code> | a map of registration data stored against the workspace. |
+
+**Example**  
+To set or unset registration data we can create a function called `onPluginRegister`
+or `onPluginUnregister` respectively. Within these functions we can still access the
+all scopes of the `registrationData` but can only update the Registration Data of the
+scope that's currently being executed in `onPluginRegister`. To do this simply pass a
+JSONResponse with an `update` property set to `true` and a `registrationData` set to the
+full registration data you wish to set. Setting the `registrationData` to undefined will
+be treated as a success but will not override any data.
+  ```javascript
+  // onPluginRegiser.js
+  ...
+  const response = new JSONResponse();
+  response.setValue(
+    {
+      update: true,
+      registrationData: {
+        regOne: 'abc',
+        regTwo: {
+          a: 'a',
+          b: 'b'
+        }
+      },
+    },
+  );
+  return response;
+
+  // myFunction.js
+  ...
+  const existingOrgRegData = meta.registrationData.organization;
+  existingOrgRegData.regOne; // 'abc';
+  existingOrgRegData.regTwo; // { a: 'a', b: 'b' };
+  ...
+  ```
