@@ -95,7 +95,7 @@ class Caller {
 class MetaData {
   constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
-    const _statsDClient = new StatsD({ organization: _caller.organization.uuid });
+    const _statsDClient = new StatsD({ tags: { organization: _caller.organization.uuid } });
     Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
     Object.defineProperty(this, 'statsDClient', { get: () => (_statsDClient), enumerable: true });
