@@ -6,32 +6,12 @@ no-console: off
 */
 const _ = require('lodash');
 const PluginData = require('smartsheet-plugindata-sdk/plugindata');
-const StatsD = require('node-statsd');
+const { StatsD } = require('smartsheet-statsd-client');
 
 let grpc;
 if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
   grpc = new PluginData(process.env.PLUGINDATA_SERVICE);
 }
-
-const statsDConfig = { mock: true };
-
-if (!_.isNil(process.env.NODE_ENV === 'production')) {
-  statsDConfig.mock = false;
-}
-
-if (!_.isNil(process.env.STATSD_HOST)) {
-  statsDConfig.host = process.env.STATSD_HOST;
-}
-
-if (!_.isNil(process.env.STATSD_PORT)) {
-  statsDConfig.port = process.env.STATSD_PORT;
-}
-
-if (!_.isNil(process.env.STATSD_PREFIX)) {
-  statsDConfig.prefix = process.env.STATSD_PREFIX;
-}
-
-const statsDClient = new StatsD(statsDConfig);
 
 function pluginCaller(caller) {
   return {
@@ -115,8 +95,10 @@ class Caller {
 class MetaData {
   constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
+    const _statsDClient = new StatsD({ organization: _caller.organization.uuid });
     Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
+    Object.defineProperty(this, 'statsDClient', { get: () => (_statsDClient), enumerable: true });
     if (_.isNil(grpc)) {
       console.error('GRPC is not loaded. Some methods may not function correctly.');
     }
@@ -139,7 +121,7 @@ class MetaData {
    * @external https://github.com/sivy/node-statsd
    */
   getStatsDClient() {
-    return statsDClient;
+    return this.statsDClient;
   }
 
   /**
