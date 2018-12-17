@@ -6,6 +6,7 @@ no-console: off
 */
 const _ = require('lodash');
 const PluginData = require('smartsheet-plugindata-sdk/plugindata');
+const { StatsD } = require('smartsheet-statsd-client');
 
 let grpc;
 if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
@@ -94,8 +95,10 @@ class Caller {
 class MetaData {
   constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
+    const _statsDClient = new StatsD({ tags: { organization: _caller.organization.uuid } });
     Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
+    Object.defineProperty(this, 'statsDClient', { get: () => (_statsDClient), enumerable: true });
     if (_.isNil(grpc)) {
       console.error('GRPC is not loaded. Some methods may not function correctly.');
     }
@@ -108,10 +111,20 @@ class MetaData {
   get caller() {}
 
   /**
-   * Registration data for the incoming request.
+   * Registration data for the incoming request. The registrationData object
+   * consists of all three scopes: user, organization, and workspace and is
+   * attached to every function call.
    * @type RegistrationData
    */
   get registrationData() {}
+
+  /**
+   * Returns a client for StatsD.
+   * @external https://github.com/sivy/node-statsd
+   */
+  getStatsDClient() {
+    return this.statsDClient;
+  }
 
   /**
    * Gets the plugin data stored against the given key and user.
@@ -272,4 +285,52 @@ module.exports = MetaData;
  * @property {string} grant_type
  * @property {string} redirect_uri
  * @property {Object.<string, string>} metadata
+ */
+
+/**
+ * @typedef RegistrationData
+ * @property {Object.<string, *>} user a map of registration data stored against the user.
+ * @property {Object.<string, *>} organization a map of registration data stored against
+ * the organisation.
+ * @property {Object.<string, *>} workspace a map of registration data stored against the
+ * workspace.
+ *
+ * @description An object containing all the registration data for each scope: user,
+ * organisation, and workspace. The `registrationData` object is attached to the MetaData
+ * object for every function including the special case functions of `onPluginRegister`
+ * and `onPluginUnregister`.
+ *
+ * @example
+ * To set or unset registration data we can create a function called `onPluginRegister`
+ * or `onPluginUnregister` respectively. Within these functions we can still access the
+ * all scopes of the `registrationData` but can only update the Registration Data of the
+ * scope that's currently being executed in `onPluginRegister`. To do this simply pass a
+ * JSONResponse with an `update` property set to `true` and a `registrationData` set to the
+ * full registration data you wish to set. Setting the `registrationData` to undefined will
+ * be treated as a success but will not override any data.
+  ```javascript
+  // onPluginRegiser.js
+  ...
+  const response = new JSONResponse();
+  response.setValue(
+    {
+      update: true,
+      registrationData: {
+        regOne: 'abc',
+        regTwo: {
+          a: 'a',
+          b: 'b'
+        }
+      },
+    },
+  );
+  return response;
+
+  // myFunction.js
+  ...
+  const existingOrgRegData = meta.registrationData.organization;
+  existingOrgRegData.regOne; // 'abc';
+  existingOrgRegData.regTwo; // { a: 'a', b: 'b' };
+  ...
+  ```
  */

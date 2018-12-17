@@ -40,7 +40,8 @@
     "debug": "^3.1.0",
     "dotenv": "^6.0.0",
     "lodash": "^4.17.10",
-    "smartsheet-plugindata-sdk": "github:converseai/smartsheet-plugindata-sdk"
+    "smartsheet-plugindata-sdk": "github:converseai/smartsheet-plugindata-sdk",
+    "smartsheet-statsd-client": "github:converseai/smartsheet-statsd-client"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
