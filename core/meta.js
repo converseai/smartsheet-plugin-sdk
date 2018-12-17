@@ -6,6 +6,7 @@ no-console: off
 */
 const _ = require('lodash');
 const PluginData = require('smartsheet-plugindata-sdk/plugindata');
+const { StatsD } = require('smartsheet-statsd-client');
 
 let grpc;
 if (!_.isNil(process.env.PLUGINDATA_SERVICE)) {
@@ -94,8 +95,10 @@ class Caller {
 class MetaData {
   constructor({ caller, registrationData } = {}) {
     const _caller = new Caller(caller);
+    const _statsDClient = new StatsD({ tags: { organization: _caller.organization.uuid } });
     Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
+    Object.defineProperty(this, 'statsDClient', { get: () => (_statsDClient), enumerable: true });
     if (_.isNil(grpc)) {
       console.error('GRPC is not loaded. Some methods may not function correctly.');
     }
@@ -114,6 +117,14 @@ class MetaData {
    * @type RegistrationData
    */
   get registrationData() {}
+
+  /**
+   * Returns a client for StatsD.
+   * @external https://github.com/sivy/node-statsd
+   */
+  getStatsDClient() {
+    return this.statsDClient;
+  }
 
   /**
    * Gets the plugin data stored against the given key and user.
