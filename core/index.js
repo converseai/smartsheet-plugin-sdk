@@ -98,7 +98,7 @@ const SDKCore = class SDKCore {
 
       log('Request Body:', this.request.body);
 
-      const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {} }
+      const { func, caller = {}, registrationData = {}, funcData = {}, httpData = {}, traceID }
         = this.request.body;
 
       const callable = this.functions[func];
@@ -106,6 +106,7 @@ const SDKCore = class SDKCore {
       const meta = new MetaData({
         caller,
         registrationData: buildRegistrationData(this.factory, registrationData),
+        traceID,
       });
 
       let params;

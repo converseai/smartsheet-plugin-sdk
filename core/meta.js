@@ -93,9 +93,10 @@ class Caller {
  * @param {Object} config.registrationData registrationData object.
  */
 class MetaData {
-  constructor({ caller, registrationData } = {}) {
+  constructor({ caller, registrationData, traceID } = {}) {
     const _caller = new Caller(caller);
     const _statsDClient = new StatsD({ tags: { organization: _caller.organization.uuid } });
+    Object.defineProperty(this, 'traceID', { get: () => (traceID), enumerable: true });
     Object.defineProperty(this, 'caller', { get: () => (_caller), enumerable: true });
     Object.defineProperty(this, 'registrationData', { get: () => (registrationData), enumerable: true });
     Object.defineProperty(this, 'statsDClient', { get: () => (_statsDClient), enumerable: true });
